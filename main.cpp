@@ -1,4 +1,10 @@
-//
-// Created by jondorito on 28/05/19.
-//
+#include "MetaDB.h"
+#include "genericlinkedlist.h"
 
+using namespace std;
+
+int main() {
+
+    cout<<"all good"<<endl;
+    return 0;
+}
