@@ -12,4 +12,4 @@ IF (Boost_FOUND)
     link_directories(${Boost_LIBRARY_DIRS})
 endif()
 
-add_executable(TheIndestructibleLibrary main.cpp GenericLinkedList.h GenericNode.h MetaDB.cpp MetaDB.h DBController.cpp DBController.h RAID/FileManager.cpp RAID/FileManager.h)
+add_executable(TheIndestructibleLibrary main.cpp GenericLinkedList.h GenericNode.h MetaDB.cpp MetaDB.h DBController.cpp DBController.h RAID/FileManager.cpp RAID/FileManager.h RAID/RAIDManager.cpp RAID/RAIDManager.h)

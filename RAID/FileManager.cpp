@@ -34,8 +34,7 @@ std::string FileManager::readRile(std::string file_Name, std::string file_Locati
 
 void FileManager::deleteFile(std::string file_Name, std::string file_Location) {
     std::string file = file_Location + "/" + file_Name + this->type;
+
     if( std::remove(file.c_str()) != 0 )
-        perror( "Error deleting file" );
-    else
-        puts( "File successfully deleted" );
+        std::cout << "FILE: " + file_Name + " , COULD NOT BE DELETED";
 }
