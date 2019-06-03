@@ -5,11 +5,12 @@
 #include "FileManager.h"
 
 void FileManager::createFile(std::string file_Name, std::string file_Location, std::string file_Data) {
-    std::string type = "txt";
-
     std::ofstream file;
 
-    file.open(file_Location + "/" + file_Name + "." + type,std::ios::out);
+    file.open(file_Location + "/" + file_Name + this->type,std::ios::out);
+
+    if (file.fail())
+        std::cout << "FILE: " + file_Name + " , COULD NOT BE CREATED" << std::endl;
 
     file << file_Data;
 
@@ -17,5 +18,24 @@ void FileManager::createFile(std::string file_Name, std::string file_Location, s
 }
 
 std::string FileManager::readRile(std::string file_Name, std::string file_Location) {
-    return std::__cxx11::string();
+    std::ifstream file;
+    std::string file_Data;
+
+    file.open(file_Location + "/" + file_Name + this->type,std::ios::in);
+
+    if (file.fail())
+        std::cout << "FILE: " + file_Name + " , COULD NOT BE OPENED" << std::endl;
+
+    while (!file.eof())
+        getline(file,file_Data);
+
+    return file_Data;
+}
+
+void FileManager::deleteFile(std::string file_Name, std::string file_Location) {
+    std::string file = file_Location + "/" + file_Name + this->type;
+    if( std::remove(file.c_str()) != 0 )
+        perror( "Error deleting file" );
+    else
+        puts( "File successfully deleted" );
 }
