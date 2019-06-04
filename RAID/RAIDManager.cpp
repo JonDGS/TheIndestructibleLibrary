@@ -15,6 +15,7 @@ RAIDManager::RAIDManager() {
 }
 
 void RAIDManager::saveImg(std::string file) {
+    if (this->disksOnline())
 
 }
 
@@ -27,7 +28,10 @@ void RAIDManager::deleteImg(std::string img_ID) {
 }
 
 bool RAIDManager::disksOnline() {
-    return false;
+    if (this->file_Manager.checkDir(this->disk_A) && this->file_Manager.checkDir(this->disk_B) && this->file_Manager.checkDir(this->disk_C) && this->file_Manager.checkDir(this->disk_D))
+        return true;
+    else
+        return false;
 }
 
 std::vector<std::string> RAIDManager::splitImg(std::string image) {
@@ -43,6 +47,7 @@ std::vector<std::string> RAIDManager::splitImg(std::string image) {
         if (i > (img_Length/3) * 2)
             parts[2] += image[i];
     }
+
     return parts;
 }
 

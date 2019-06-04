@@ -7,10 +7,12 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "FileManager.h"
 
 
 class RAIDManager {
 private:
+    FileManager file_Manager;
     std::string disk_A;
     std::string disk_B;
     std::string disk_C;
