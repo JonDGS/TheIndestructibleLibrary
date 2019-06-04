@@ -17,7 +17,6 @@ private:
     std::string disk_B;
     std::string disk_C;
     std::string disk_D;
-    std::string disk_BACK_UP;
     int parity_Allocator;
 
 public:
@@ -29,7 +28,7 @@ public:
      * Take a string, slice it on three parts, based on this parts calculated a parity part using XOR and save the four
      * parts on the disks, in an alternating order in which the parity part is never stored on a single disk.
      */
-    void saveImg(std::string file); // disksOnline() -> splitImg(Image) -> parityCalculator(parts of Image) -> Allocates all parts
+    void saveImg(std::string file, int ID); // disksOnline() -> splitImg(Image) -> parityCalculator(parts of Image) -> Allocates all parts
 
     /*
      * With the given ID the program should search throughout the disks for the three parts tht make up the image and
@@ -45,13 +44,23 @@ public:
 
     // SUB METHODS (PRIVATE)
 
-    /*
+    /**
      * Checks if all disks are online, remakes a disk in the case it was lost using parity.
+     * @return a boolean indicating the status of the disks
      */
     bool disksOnline();
 
     /*
+     * Creates a disk that was destroyed, uses the parity files to recreated the missing parts contained in the lost
+     * disk and recalculates the all the parities that were lost during the lost of the disk.
+     */
+    void repairDisk();
+
+
+    /**
      * Takes an image string and divides it into three mostly equals parts
+     * @param image string to be split
+     * @return a vector of substrings of the passed image string
      */
     std::vector<std::string> splitImg(std::string image);
 
