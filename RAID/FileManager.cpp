@@ -38,3 +38,19 @@ void FileManager::deleteFile(std::string file_Name, std::string file_Location) {
     if( std::remove(file.c_str()) != 0 )
         std::cout << "FILE: " + file_Name + " , COULD NOT BE DELETED";
 }
+
+bool FileManager::checkDir(std::string path) {
+    std::ifstream file;
+    std::string file_Data;
+
+    bool status = true;
+
+    file.open(path,std::ios::in);
+
+    if (file.fail()) {
+        status = false;
+        std::cout << "Dir: " + path + " , DOES NOT EXIST" << std::endl;
+    }
+
+    return status;
+}
