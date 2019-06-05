@@ -50,7 +50,15 @@ int main() {
     rm.deleteImg(5);
     */
 
-    fm.createDirectory("TEST","/media/alvar/AVM/MyRAID5");
+    //fm.createDirectory("TEST","/media/alvar/AVM/MyRAID5");
+
+    rm.saveImg("Oh boi i just hope this works Like pls work i wanna go to sleep pls pls work mah machine i believe in you",1);
+
+    std::this_thread::sleep_for(std::chrono::seconds(15));
+
+    std::cout << rm.getImg(1);
+
+    rm.deleteImg(1);
 
     return 0;
 }

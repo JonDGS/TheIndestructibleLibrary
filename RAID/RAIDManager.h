@@ -34,7 +34,7 @@ public:
      * With the given ID the program should search throughout the disks for the three parts tht make up the image and
      * combine the parts to create the full image and give it back to the caller.
      */
-    std::string getImg(std::string img_ID);
+    std::string getImg(int img_ID);
 
     /**
      * With a given ID the program should search throughout the disks for each part conforming the image (including the

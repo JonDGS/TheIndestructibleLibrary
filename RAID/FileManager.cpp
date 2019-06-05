@@ -35,8 +35,10 @@ std::string FileManager::readRile(std::string file_Name, std::string file_Locati
 
     file.open(file_Location + "/" + file_Name + this->type,std::ios::in);
 
-    if (file.fail())
+    if (file.fail()) {
         std::cout << "FILE: " + file_Name + " , COULD NOT BE READ" << std::endl;
+        return "";
+    }
 
     while (!file.eof())
         getline(file,file_Data);

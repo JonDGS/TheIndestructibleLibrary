@@ -61,8 +61,15 @@ void RAIDManager::saveImg(std::string file,int ID) {
         this->file_Manager.createFile(std::to_string(ID) + "d", this->disk_D,parts[x]);
 }
 
-std::string RAIDManager::getImg(std::string img_ID) {
-    return std::__cxx11::string();
+std::string RAIDManager::getImg(int img_ID) {
+    std::string img_Data;
+
+    img_Data += this->file_Manager.readRile(std::to_string(img_ID) + "a",this->disk_A);
+    img_Data += this->file_Manager.readRile(std::to_string(img_ID) + "b",this->disk_B);
+    img_Data += this->file_Manager.readRile(std::to_string(img_ID) + "c",this->disk_C);
+    img_Data += this->file_Manager.readRile(std::to_string(img_ID) + "d",this->disk_D);
+
+    return img_Data;
 }
 
 void RAIDManager::deleteImg(int img_ID) {
