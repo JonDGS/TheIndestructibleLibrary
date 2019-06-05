@@ -65,12 +65,33 @@ std::string RAIDManager::getImg(std::string img_ID) {
     return std::__cxx11::string();
 }
 
-void RAIDManager::deleteImg(std::string img_ID) {
+void RAIDManager::deleteImg(int img_ID) {
 
+    if (this->file_Manager.checkLocation(this->disk_A + "/" + std::to_string(img_ID) + "a" + ".txt"))
+        this->file_Manager.deleteFile(std::to_string(img_ID) + "a",this->disk_A);
+    else
+        this->file_Manager.deleteFile(std::to_string(img_ID) + "p",this->disk_A);
+
+    if (this->file_Manager.checkLocation(this->disk_B + "/" + std::to_string(img_ID) + "b" + ".txt"))
+        this->file_Manager.deleteFile(std::to_string(img_ID) + "b",this->disk_B);
+    else
+        this->file_Manager.deleteFile(std::to_string(img_ID) + "p",this->disk_B);
+
+    if (this->file_Manager.checkLocation(this->disk_C + "/" + std::to_string(img_ID) + "c" + ".txt"))
+        this->file_Manager.deleteFile(std::to_string(img_ID) + "c",this->disk_C);
+    else
+        this->file_Manager.deleteFile(std::to_string(img_ID) + "p",this->disk_C);
+
+    if (this->file_Manager.checkLocation(this->disk_D + "/" + std::to_string(img_ID) + "d" + ".txt"))
+        this->file_Manager.deleteFile(std::to_string(img_ID) + "d",this->disk_D);
+    else
+        this->file_Manager.deleteFile(std::to_string(img_ID) + "p",this->disk_D);
 }
 
 bool RAIDManager::disksOnline() {
-    if (this->file_Manager.checkDir(this->disk_A) && this->file_Manager.checkDir(this->disk_B) && this->file_Manager.checkDir(this->disk_C) && this->file_Manager.checkDir(this->disk_D))
+    if (this->file_Manager.checkLocation(this->disk_A) && this->file_Manager.checkLocation(this->disk_B) &&
+            this->file_Manager.checkLocation(this->disk_C) &&
+            this->file_Manager.checkLocation(this->disk_D))
         return true;
     else
         return false;
@@ -85,27 +106,14 @@ std::vector<std::string> RAIDManager::splitImg(std::string image) {
 
     std::vector<std::string> parts(4);
 
-    /*
-    for (int i = 1;i < img_Length + 1;i++) {
-        if (i < (img_Length/3))
-            parts[0] += image[i];
-        if (i > img_Length/3 && i < (img_Length/3) * 2)
-            parts[1] += image[i];
-        if (i > (img_Length/3) * 2)
-            parts[2] += image[i];
-    }
-    */
+    std::string part1, part2, part3;
 
-    std::string part1;
-    std::string part2;
-    std::string part3;
-
-    for (int i = 0;i < image.length();i++) {
-        if (i < (image.length()/3))
+    for (int i = 0;i < img_Length;i++) {
+        if (i < img_Length / 3)
             part1 += image[i];
-        if (i >= image.length()/3 && i < (image.length()/3) * 2)
+        if (i >= img_Length / 3 && i < (img_Length / 3) * 2)
             part2 += image[i];
-        if (i >= (image.length()/3) * 2)
+        if (i >= (img_Length / 3) * 2)
             part3 += image[i];
     }
 

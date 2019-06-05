@@ -24,7 +24,7 @@ std::string FileManager::readRile(std::string file_Name, std::string file_Locati
     file.open(file_Location + "/" + file_Name + this->type,std::ios::in);
 
     if (file.fail())
-        std::cout << "FILE: " + file_Name + " , COULD NOT BE OPENED" << std::endl;
+        std::cout << "FILE: " + file_Name + " , COULD NOT BE READ" << std::endl;
 
     while (!file.eof())
         getline(file,file_Data);
@@ -36,10 +36,14 @@ void FileManager::deleteFile(std::string file_Name, std::string file_Location) {
     std::string file = file_Location + "/" + file_Name + this->type;
 
     if( std::remove(file.c_str()) != 0 )
-        std::cout << "FILE: " + file_Name + " , COULD NOT BE DELETED";
+        std::cout << "FILE: " + file + " , COULD NOT BE DELETED" << std::endl;
 }
 
-bool FileManager::checkDir(std::string path) {
+void FileManager::createDirectory(std::string dir_Name, std::string dir_Location) {
+    mkdir((dir_Location + "/" + dir_Name).c_str(),S_IRUSR | S_IWUSR | S_IXUSR);
+}
+
+bool FileManager::checkLocation(std::string path) {
     std::ifstream file;
     std::string file_Data;
 
@@ -49,7 +53,7 @@ bool FileManager::checkDir(std::string path) {
 
     if (file.fail()) {
         status = false;
-        std::cout << "Dir: " + path + " , DOES NOT EXIST" << std::endl;
+        std::cout << "Dir: " + path + " , COULD NOT BE OPENED" << std::endl;
     }
 
     return status;

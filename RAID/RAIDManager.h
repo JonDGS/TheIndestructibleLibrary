@@ -36,11 +36,12 @@ public:
      */
     std::string getImg(std::string img_ID);
 
-    /*
+    /**
      * With a given ID the program should search throughout the disks for each part conforming the image (including the
      * parity part) and delete them.
+     * @param img_ID to find the image parts to delete
      */
-    void deleteImg(std::string img_ID);
+    void deleteImg(int img_ID);
 
     // SUB METHODS (PRIVATE)
 

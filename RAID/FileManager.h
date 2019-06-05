@@ -8,6 +8,7 @@
 #include <fstream>
 #include <string>
 #include <stdio.h>
+#include <sys/stat.h>
 
 
 class FileManager {
@@ -23,5 +24,7 @@ public:
 
     void deleteFile(std::string file_Name,std::string file_Location);
 
-    bool checkDir(std::string path);
+    void createDirectory(std::string dir_Name,std::string dir_Location);
+
+    bool checkLocation(std::string path);
 };
