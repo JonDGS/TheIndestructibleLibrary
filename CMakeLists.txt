@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 Set(CMAKE_CXX_FLAGS  -pthread)
 
 set(Boost_INCLUDE_DIR ${CMAKE_BINARY_DIR}/../libraries/boost_1_68_0)
-find_package(Boost)
+#find_package(Boost)
 IF (Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIR})
     link_directories(${Boost_LIBRARY_DIRS})
