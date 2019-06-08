@@ -25,6 +25,7 @@ public:
     bool includes(T);
     void deleteEndNode();
     GenericNode<T>* getLast();
+    T* getDataPointerByIndex(int index);
 private:
     GenericNode<T>* header;
     GenericNode<T>* last;
@@ -165,6 +166,18 @@ void GenericLinkedList<T>::deleteEndNode(){
 template<class T>
 GenericNode<T> *GenericLinkedList<T>::getLast() {
     return this->last;
+}
+
+/**
+ *
+ * @tparam T type of data
+ * @param index (place in the linkedlist)
+ * @return A pointer to where the data is being stored in memory
+ */
+template<class T>
+T* GenericLinkedList<T>::getDataPointerByIndex(int index) {
+    T* DataPointer = &this->get(index)->getData();
+    return DataPointer;
 }
 
 
