@@ -38,7 +38,9 @@ int convertCommandToInt(std::string data) {
         requestImage = 0,
         uploadImage,
         uploadMetadata,
-        deleteImage
+        deleteImage,
+        logIn,
+        logOut
     };
     if (data == "requestImage") {
         return requestImage;
@@ -52,11 +54,35 @@ int convertCommandToInt(std::string data) {
     if (data == "deleteImage") {
         return deleteImage;
     }
+    if (data == "logIn") {
+        return logIn;
+    }
+    if (data == "logOut") {
+        return logOut;
+    }
     return -1;
+}
+
+void Server::closeSession(std::string user) {
+    for(int i = 0; i < *currentUsers->getLength(); i++){
+        std::string current = currentUsers->get(i)->getData();
+        if(user == current) currentUsers->remove(i);
+    }
+}
+
+bool Server::hasSession(std::string user) {
+    for(int i = 0; i < *currentUsers->getLength(); i++){
+        std::string current = currentUsers->get(i)->getData();
+        if(user == current) return true;
+    }
+    return false;
 }
 
 
 int Server::start() {
+
+    currentUsers = new GenericLinkedList<std::string>();
+
 
     int opt = TRUE;
     int master_socket, addrlen, new_socket, client_socket[30],
@@ -194,19 +220,40 @@ int Server::start() {
 
                     std::string command = doc["NetPackage"]["command"].GetString();
 
+                    std::string user = doc["NetPackage"]["from"].GetString();
+
                     int commandInt = convertCommandToInt(command);
                     std::cout << commandInt << std::endl;
                     NetPackage *netpack = new NetPackage();
                     netpack->setFrom("Server");
-                    switch (commandInt) {
-                        case 0: {
-                            netpack->setCommand("setStats");
-                            netpack->setData("");
-                            std::string final = netpack->getJSONPackage();
-                            std::cout << "Voy a enviar " << final << std::endl;
-                            send(sd, final.c_str(), strlen(final.c_str()), 0);
+                    if(hasSession(user)) {
+                        switch (commandInt) {
+                            case 0: {
+                                netpack->setCommand("setStats");
+                                netpack->setData("");
+                                std::string final = netpack->getJSONPackage();
+                                std::cout << "Voy a enviar " << final << std::endl;
+                                send(sd, final.c_str(), strlen(final.c_str()), 0);
+                            }
+                                break;
+                            default:
+                                netpack->setCommand("INVALID");
+                                std::string final = netpack->getJSONPackage();
+                                send(sd, final.c_str(), strlen(final.c_str()), 0);
                         }
+                    }else{
+                        switch(commandInt){
+                            case 4:
+                            {
+                                currentUsers->add(user);
+                            }
                             break;
+                            case 5:
+                            {
+                                closeSession(user);
+                            }
+                            break;
+                        }
                     }
                 }
             }
