@@ -1,9 +1,9 @@
 //
-// Created by jondorito on 05/06/19.
+// Created by jondorito on 03/04/19.
 //
 
-#ifndef THEINDESTRUCTIBLELIBRARY_GENERICNODE_H
-#define THEINDESTRUCTIBLELIBRARY_GENERICNODE_H
+#ifndef TESTSERVER_GenericNode_H
+#define TESTSERVER_GenericNode_H
 
 /**
  * GenericNode class for the GenericLinkedList
@@ -14,6 +14,7 @@ class GenericNode {
 public:
     GenericNode(T);
     T getData();
+    T* getDataPtr();
     GenericNode<T>* getNext();
     void setNext(GenericNode<T>*);
 
@@ -45,6 +46,17 @@ T GenericNode<T>::getData() {
 }
 
 /**
+ * Return a pointer to a data on an existing node
+ * @tparam T
+ * @return T
+ */
+template<class T>
+T* GenericNode<T>::getDataPtr() {
+    T* ptr = &data;
+    return ptr;
+}
+
+/**
  * Returns the node next to this one
  * @tparam T
  * @return GenericNode<T>*
@@ -65,4 +77,7 @@ void GenericNode<T>::setNext(GenericNode<T> *next) {
 }
 
 
-#endif //THEINDESTRUCTIBLELIBRARY_GENERICNODE_H
+
+
+
+#endif //TESTSERVER_GenericNode_H
