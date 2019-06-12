@@ -1,6 +1,6 @@
-#include "MetaDB.h"
 #include "RAID/FileManager.h"
 #include "RAID/RAIDManager.h"
+#include "Database/MetaController.h"
 
 #include <thread>
 #include <string>
@@ -52,13 +52,18 @@ int main() {
 
     //fm.createDirectory("TEST","/media/alvar/AVM/MyRAID5");
 
-    rm.saveImg("Oh boi i just hope this works Like pls work i wanna go to sleep pls pls work mah machine i believe in you",1);
+    /*rm.saveImg("Oh boi i just hope this works Like pls work i wanna go to sleep pls pls work mah machine i believe in you",1);
 
     std::this_thread::sleep_for(std::chrono::seconds(15));
 
     std::cout << rm.getImg(1);
 
-    rm.deleteImg(1);
+    rm.deleteImg(1);*/
+
+
+    //////////////////////////////////////////////////////////Database
+    //MetaController db = MetaController();
+    //cout << db.getCurrent() <<endl;
 
     return 0;
 }
