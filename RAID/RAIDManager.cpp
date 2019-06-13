@@ -22,6 +22,12 @@ RAIDManager::RAIDManager() {
         this->repairDisk();
 }
 
+/**
+ * Take a string, slice it on three parts, based on this parts calculated a parity part using XOR and save the four
+ * parts on the disks, in an alternating order in which the parity part is never stored on a single disk.
+ * @param ID of the saved file
+ * @param file to save
+ */
 void RAIDManager::saveFile(std::string ID, std::string file) {
     // CHECKS IF OT HAS TO REPAIR ANY DISK
     if (!this->disksOnline())
@@ -78,7 +84,7 @@ void RAIDManager::saveFile(std::string ID, std::string file) {
 }
 
 /**
- * Gives the full image string of the passed ID
+ * Gives the full file string of the passed ID
  * @param ID to know which parts combine
  * @return The complete image string
  */
@@ -155,6 +161,10 @@ bool RAIDManager::disksOnline() {
            this->file_Manager.checkLocation(this->disk_E);
 }
 
+/**
+ * Creates a disk that was destroyed, uses the parity files to recreated the missing parts contained in the lost
+ * disk and recalculates the all the parities that were lost during the lost of the disk.
+ */
 void RAIDManager::repairDisk() {
     std::string lost_Disk_Location;
     std::string lost_Disk_Name;
@@ -387,6 +397,9 @@ std::string RAIDManager::parityCalculator(std::string* parts_Of_Image) {
 }
 
 void RAIDManager::saveIDs() {
+    // IF THERE ARE NO IDs TO STORE EMPTIES THE BACKUP FILE
+    if (this->IDs.empty())
+
 
 }
 

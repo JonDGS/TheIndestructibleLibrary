@@ -59,6 +59,19 @@ void FileManager::deleteFile(std::string file_Name, std::string file_Location) {
 }
 
 /**
+ * Empties a given file on a given location
+ * @param file_Name to empty
+ * @param file_Location where the file is
+ */
+void FileManager::emptyFile(std::string file_Name,std::string file_Location) {
+    std::ofstream file;
+
+    file.open(file_Location + "/" + file_Name + this->type,std::ofstream::out | std::ofstream::trunc);
+
+    file.close();
+}
+
+/**
  * Creates a directory with a specified name and a specified location
  * @param dir_Name name of the new directory
  * @param dir_Location location to create the new directory
@@ -87,3 +100,5 @@ bool FileManager::checkLocation(std::string path) {
 
     return status;
 }
+
+
