@@ -24,37 +24,9 @@ private:
 
     int n_Files;
 
-    std::vector<int> IDs;
+    std::vector<std::string> IDs;
 
     int parity_Allocator;
-
-public:
-    RAIDManager();
-
-    // MAIN METHODS (PUBLIC)
-
-    /*
-     * Take a string, slice it on three parts, based on this parts calculated a parity part using XOR and save the four
-     * parts on the disks, in an alternating order in which the parity part is never stored on a single disk.
-     */
-    void saveImg(std::string file, int ID);
-
-    /**
-     * With the given ID the program should search throughout the disks for the three parts tht make up the image and
-     * combine the parts to create the full image and give it back to the caller.
-     * @param img_ID used to make the system know which image is being requested
-     * @return the complete requested image
-     */
-    std::string getImg(int img_ID);
-
-    /**
-     * With a given ID the program should search throughout the disks for each part conforming the image (including the
-     * parity part) and delete them.
-     * @param img_ID to find the image parts to delete
-     */
-    void deleteImg(int img_ID);
-
-    // SUB METHODS (PRIVATE)
 
     /**
      * Checks if all disks are online, remakes a disk in the case it was lost using parity.
@@ -62,7 +34,7 @@ public:
      */
     bool disksOnline();
 
-    /*
+    /**
      * Creates a disk that was destroyed, uses the parity files to recreated the missing parts contained in the lost
      * disk and recalculates the all the parities that were lost during the lost of the disk.
      */
@@ -82,4 +54,41 @@ public:
      * @return the parity based on the parts of the image
      */
     std::string parityCalculator(std::string* parts_Of_Image);
+
+    /**
+     * This method should take the Ids stored on the IDs vector and save them to a file in disk
+     */
+    void saveIDs();
+
+    /**
+     * This method should check the backup file of the IDs and complete the vector in the case the vector is lacking any
+     * of the IDs stored on the backup file
+     */
+    void checkIDs();
+
+public:
+    RAIDManager();
+
+    /**
+     * Take a string, slice it on three parts, based on this parts calculated a parity part using XOR and save the four
+     * parts on the disks, in an alternating order in which the parity part is never stored on a single disk.
+     * @param ID of the saved file
+     * @param file to save
+     */
+    void saveFile(std::string ID, std::string file);
+
+    /**
+     * With the given ID the program should search throughout the disks for the three parts tht make up the image and
+     * combine the parts to create the full image and give it back to the caller.
+     * @param ID used to make the system know which image is being requested
+     * @return the complete requested image
+     */
+    std::string getFile(std::string ID);
+
+    /**
+     * With a given ID the program should search throughout the disks for each part conforming the image (including the
+     * parity part) and delete them.
+     * @param ID to find the image parts to delete
+     */
+    void deleteFile(std::string ID);
 };

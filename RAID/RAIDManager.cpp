@@ -22,7 +22,7 @@ RAIDManager::RAIDManager() {
         this->repairDisk();
 }
 
-void RAIDManager::saveImg(std::string file,int ID) {
+void RAIDManager::saveFile(std::string ID, std::string file) {
     // CHECKS IF OT HAS TO REPAIR ANY DISK
     if (!this->disksOnline())
         this->repairDisk();
@@ -40,38 +40,38 @@ void RAIDManager::saveImg(std::string file,int ID) {
     int x = 0;
 
     if (this->parity_Allocator == 1) {
-        this->file_Manager.createFile(std::to_string(ID) + "p",this->disk_A,parts[4]);
+        this->file_Manager.createFile(ID + "p",this->disk_A,parts[4]);
         this->parity_Allocator = 5;
     } else {
-        this->file_Manager.createFile(std::to_string(ID) + "a", this->disk_A, parts[x]);
+        this->file_Manager.createFile(ID + "a", this->disk_A, parts[x]);
         x++;
     }
     if (this->parity_Allocator == 2) {
-        this->file_Manager.createFile(std::to_string(ID) + "p",this->disk_B,parts[4]);
+        this->file_Manager.createFile(ID + "p",this->disk_B,parts[4]);
         this->parity_Allocator--;
     } else {
-        this->file_Manager.createFile(std::to_string(ID) + "b",this->disk_B,parts[x]);
+        this->file_Manager.createFile(ID + "b",this->disk_B,parts[x]);
         x++;
     }
     if (this->parity_Allocator == 3) {
-        this->file_Manager.createFile(std::to_string(ID) + "p",this->disk_C,parts[4]);
+        this->file_Manager.createFile(ID + "p",this->disk_C,parts[4]);
         this->parity_Allocator--;
     } else {
-        this->file_Manager.createFile(std::to_string(ID) + "c",this->disk_C,parts[x]);
+        this->file_Manager.createFile(ID + "c",this->disk_C,parts[x]);
         x++;
     }
     if (this->parity_Allocator == 4) {
-        this->file_Manager.createFile(std::to_string(ID) + "p",this->disk_D,parts[4]);
+        this->file_Manager.createFile(ID + "p",this->disk_D,parts[4]);
         this->parity_Allocator--;
     } else {
-        this->file_Manager.createFile(std::to_string(ID) + "d",this->disk_D,parts[x]);
+        this->file_Manager.createFile(ID + "d",this->disk_D,parts[x]);
         x++;
     }
     if (this->parity_Allocator == 5) {
-        this->file_Manager.createFile(std::to_string(ID) + "p",this->disk_E,parts[4]);
+        this->file_Manager.createFile(ID + "p",this->disk_E,parts[4]);
         this->parity_Allocator--;
     } else
-        this->file_Manager.createFile(std::to_string(ID) + "e", this->disk_E,parts[x]);
+        this->file_Manager.createFile(ID + "e", this->disk_E,parts[x]);
 
     // ADDS ONE TO THE FILES COUNTER
     this->n_Files++;
@@ -79,68 +79,68 @@ void RAIDManager::saveImg(std::string file,int ID) {
 
 /**
  * Gives the full image string of the passed ID
- * @param img_ID to know which parts combine
+ * @param ID to know which parts combine
  * @return The complete image string
  */
-std::string RAIDManager::getImg(int img_ID) {
+std::string RAIDManager::getFile(std::string ID) {
     // CHECKS IF OT HAS TO REPAIR ANY DISK
     if (!this->disksOnline())
         this->repairDisk();
 
     // DECLARES THE STRING TO RETURN
-    std::string img_Data;
+    std::string data;
 
     // TAKES ALL THE PARTS AND COMBINES THEM
-    img_Data += this->file_Manager.readRile(std::to_string(img_ID) + "a",this->disk_A);
-    img_Data += this->file_Manager.readRile(std::to_string(img_ID) + "b",this->disk_B);
-    img_Data += this->file_Manager.readRile(std::to_string(img_ID) + "c",this->disk_C);
-    img_Data += this->file_Manager.readRile(std::to_string(img_ID) + "d",this->disk_D);
-    img_Data += this->file_Manager.readRile(std::to_string(img_ID) + "e",this->disk_D);
+    data += this->file_Manager.readRile(ID + "a",this->disk_A);
+    data += this->file_Manager.readRile(ID + "b",this->disk_B);
+    data += this->file_Manager.readRile(ID + "c",this->disk_C);
+    data += this->file_Manager.readRile(ID + "d",this->disk_D);
+    data += this->file_Manager.readRile(ID + "e",this->disk_D);
 
-    return img_Data;
+    return data;
 }
 
 /**
  * Deletes all the associated parts of an image by using its ID
- * @param img_ID to know which parts to delete
+ * @param ID to know which parts to delete
  */
-void RAIDManager::deleteImg(int img_ID) {
+void RAIDManager::deleteFile(std::string ID) {
     // CHECKS IF OT HAS TO REPAIR ANY DISK
     if (!this->disksOnline())
         this->repairDisk();
 
     // DELETES ALL THE PARTS ASSOCIATED TO THE PASSED ID
-    if (this->file_Manager.checkLocation(this->disk_A + "/" + std::to_string(img_ID) + "a" + ".txt"))
-        this->file_Manager.deleteFile(std::to_string(img_ID) + "a",this->disk_A);
+    if (this->file_Manager.checkLocation(this->disk_A + "/" + ID + "a" + ".txt"))
+        this->file_Manager.deleteFile(ID + "a",this->disk_A);
     else
-        this->file_Manager.deleteFile(std::to_string(img_ID) + "p",this->disk_A);
+        this->file_Manager.deleteFile(ID + "p",this->disk_A);
 
-    if (this->file_Manager.checkLocation(this->disk_B + "/" + std::to_string(img_ID) + "b" + ".txt"))
-        this->file_Manager.deleteFile(std::to_string(img_ID) + "b",this->disk_B);
+    if (this->file_Manager.checkLocation(this->disk_B + "/" + ID + "b" + ".txt"))
+        this->file_Manager.deleteFile(ID + "b",this->disk_B);
     else
-        this->file_Manager.deleteFile(std::to_string(img_ID) + "p",this->disk_B);
+        this->file_Manager.deleteFile(ID + "p",this->disk_B);
 
-    if (this->file_Manager.checkLocation(this->disk_C + "/" + std::to_string(img_ID) + "c" + ".txt"))
-        this->file_Manager.deleteFile(std::to_string(img_ID) + "c",this->disk_C);
+    if (this->file_Manager.checkLocation(this->disk_C + "/" + ID + "c" + ".txt"))
+        this->file_Manager.deleteFile(ID + "c",this->disk_C);
     else
-        this->file_Manager.deleteFile(std::to_string(img_ID) + "p",this->disk_C);
+        this->file_Manager.deleteFile(ID + "p",this->disk_C);
 
-    if (this->file_Manager.checkLocation(this->disk_D + "/" + std::to_string(img_ID) + "d" + ".txt"))
-        this->file_Manager.deleteFile(std::to_string(img_ID) + "d",this->disk_D);
+    if (this->file_Manager.checkLocation(this->disk_D + "/" + ID + "d" + ".txt"))
+        this->file_Manager.deleteFile(ID + "d",this->disk_D);
     else
-        this->file_Manager.deleteFile(std::to_string(img_ID) + "p",this->disk_D);
+        this->file_Manager.deleteFile(ID + "p",this->disk_D);
 
-    if (this->file_Manager.checkLocation(this->disk_E + "/" + std::to_string(img_ID) + "e" + ".txt"))
-        this->file_Manager.deleteFile(std::to_string(img_ID) + "e",this->disk_E);
+    if (this->file_Manager.checkLocation(this->disk_E + "/" + ID + "e" + ".txt"))
+        this->file_Manager.deleteFile(ID + "e",this->disk_E);
     else
-        this->file_Manager.deleteFile(std::to_string(img_ID) + "p",this->disk_E);
+        this->file_Manager.deleteFile(ID + "p",this->disk_E);
 
     // DECREASE THE FILE COUNTER
     this->n_Files--;
 
     // DELETES THE ID FROM THE IDs LIST
     for(int i = 0;i < this->IDs.size();i++) {
-        if (this->IDs[i] == img_ID)
+        if (this->IDs[i] == ID)
             this->IDs.erase(this->IDs.begin() + i);
     }
 }
@@ -201,115 +201,115 @@ void RAIDManager::repairDisk() {
     for (int i = 0; i < this->IDs.size(); i++) {
 
         // NAME TO CREATE THE NEW FILE
-        std::string lost_File_Name = std::to_string(this->IDs[i]);
+        std::string lost_File_Name = this->IDs[i];
 
         std::string parts[4];
 
         std::string lost_File_Data;
 
         // WE CHECK IF THE PARITY IS OUTSIDE OF THE LOST DISK, TO KNOW WHICH FULL NAME THE LOST FILE HAD
-        if (this->file_Manager.checkLocation(this->disk_A + "/" + std::to_string(this->IDs[i]) + "p" + ".txt") ||
-            this->file_Manager.checkLocation(this->disk_B + "/" + std::to_string(this->IDs[i]) + "p" + ".txt") ||
-            this->file_Manager.checkLocation(this->disk_C + "/" + std::to_string(this->IDs[i]) + "p" + ".txt") ||
-            this->file_Manager.checkLocation(this->disk_D + "/" + std::to_string(this->IDs[i]) + "p" + ".txt") ||
-            this->file_Manager.checkLocation(this->disk_E + "/" + std::to_string(this->IDs[i]) + "p" + ".txt"))
+        if (this->file_Manager.checkLocation(this->disk_A + "/" + this->IDs[i] + "p" + ".txt") ||
+            this->file_Manager.checkLocation(this->disk_B + "/" + this->IDs[i] + "p" + ".txt") ||
+            this->file_Manager.checkLocation(this->disk_C + "/" + this->IDs[i] + "p" + ".txt") ||
+            this->file_Manager.checkLocation(this->disk_D + "/" + this->IDs[i] + "p" + ".txt") ||
+            this->file_Manager.checkLocation(this->disk_E + "/" + this->IDs[i] + "p" + ".txt"))
             lost_File_Name += lost_File_Char;
         else
             lost_File_Name += 'p';
 
         if (lost_Disk_Name == "Disk_A") { // CASE WERE DISK_A WAS LOST
-            if (this->file_Manager.checkLocation(this->disk_B + "/" + std::to_string(IDs[i]) + 'b' + ".txt"))
-                parts[0] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'b', this->disk_B);
+            if (this->file_Manager.checkLocation(this->disk_B + "/" + IDs[i] + 'b' + ".txt"))
+                parts[0] = this->file_Manager.readRile(IDs[i] + 'b', this->disk_B);
             else
-                parts[0] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_B);
-            if (this->file_Manager.checkLocation(this->disk_C + "/" + std::to_string(IDs[i]) + 'c' + ".txt"))
-                parts[1] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'c', this->disk_C);
+                parts[0] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_B);
+            if (this->file_Manager.checkLocation(this->disk_C + "/" + IDs[i] + 'c' + ".txt"))
+                parts[1] = this->file_Manager.readRile(IDs[i] + 'c', this->disk_C);
             else
-                parts[1] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_C);
-            if (this->file_Manager.checkLocation(this->disk_D + "/" + std::to_string(IDs[i]) + 'd' + ".txt"))
-                parts[2] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'd', this->disk_D);
+                parts[1] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_C);
+            if (this->file_Manager.checkLocation(this->disk_D + "/" + IDs[i] + 'd' + ".txt"))
+                parts[2] = this->file_Manager.readRile(IDs[i] + 'd', this->disk_D);
             else
-                parts[2] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_D);
-            if (this->file_Manager.checkLocation(this->disk_E + "/" + std::to_string(IDs[i]) + 'e' + ".txt"))
-                parts[3] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'e', this->disk_E);
+                parts[2] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_D);
+            if (this->file_Manager.checkLocation(this->disk_E + "/" + IDs[i] + 'e' + ".txt"))
+                parts[3] = this->file_Manager.readRile(IDs[i] + 'e', this->disk_E);
             else
-                parts[3] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_E);
+                parts[3] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_E);
         }
 
         if (lost_Disk_Name == "Disk_B") { // CASE WERE DISK_A WAS LOST
-            if (this->file_Manager.checkLocation(this->disk_A + "/" + std::to_string(IDs[i]) + 'a' + ".txt"))
-                parts[0] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'a', this->disk_A);
+            if (this->file_Manager.checkLocation(this->disk_A + "/" + IDs[i] + 'a' + ".txt"))
+                parts[0] = this->file_Manager.readRile(IDs[i] + 'a', this->disk_A);
             else
-                parts[0] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_A);
-            if (this->file_Manager.checkLocation(this->disk_C + "/" + std::to_string(IDs[i]) + 'c' + ".txt"))
-                parts[1] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'c', this->disk_C);
+                parts[0] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_A);
+            if (this->file_Manager.checkLocation(this->disk_C + "/" + IDs[i] + 'c' + ".txt"))
+                parts[1] = this->file_Manager.readRile(IDs[i] + 'c', this->disk_C);
             else
-                parts[1] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_C);
-            if (this->file_Manager.checkLocation(this->disk_D + "/" + std::to_string(IDs[i]) + 'd' + ".txt"))
-                parts[2] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'd', this->disk_D);
+                parts[1] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_C);
+            if (this->file_Manager.checkLocation(this->disk_D + "/" + IDs[i] + 'd' + ".txt"))
+                parts[2] = this->file_Manager.readRile(IDs[i] + 'd', this->disk_D);
             else
-                parts[2] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_D);
-            if (this->file_Manager.checkLocation(this->disk_E + "/" + std::to_string(IDs[i]) + 'e' + ".txt"))
-                parts[3] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'e', this->disk_E);
+                parts[2] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_D);
+            if (this->file_Manager.checkLocation(this->disk_E + "/" + IDs[i] + 'e' + ".txt"))
+                parts[3] = this->file_Manager.readRile(IDs[i] + 'e', this->disk_E);
             else
-                parts[3] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_E);
+                parts[3] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_E);
         }
 
         if (lost_Disk_Name == "Disk_C") { // CASE WERE DISK_A WAS LOST
-            if (this->file_Manager.checkLocation(this->disk_A + "/" + std::to_string(IDs[i]) + 'a' + ".txt"))
-                parts[0] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'a', this->disk_A);
+            if (this->file_Manager.checkLocation(this->disk_A + "/" + IDs[i] + 'a' + ".txt"))
+                parts[0] = this->file_Manager.readRile(IDs[i] + 'a', this->disk_A);
             else
-                parts[0] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_A);
-            if (this->file_Manager.checkLocation(this->disk_B + "/" + std::to_string(IDs[i]) + 'b' + ".txt"))
-                parts[1] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'b', this->disk_B);
+                parts[0] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_A);
+            if (this->file_Manager.checkLocation(this->disk_B + "/" + IDs[i] + 'b' + ".txt"))
+                parts[1] = this->file_Manager.readRile(IDs[i] + 'b', this->disk_B);
             else
-                parts[1] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_B);
-            if (this->file_Manager.checkLocation(this->disk_D + "/" + std::to_string(IDs[i]) + 'd' + ".txt"))
-                parts[2] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'd', this->disk_D);
+                parts[1] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_B);
+            if (this->file_Manager.checkLocation(this->disk_D + "/" + IDs[i] + 'd' + ".txt"))
+                parts[2] = this->file_Manager.readRile(IDs[i] + 'd', this->disk_D);
             else
-                parts[2] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_D);
-            if (this->file_Manager.checkLocation(this->disk_E + "/" + std::to_string(IDs[i]) + 'e' + ".txt"))
-                parts[3] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'e', this->disk_E);
+                parts[2] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_D);
+            if (this->file_Manager.checkLocation(this->disk_E + "/" + IDs[i] + 'e' + ".txt"))
+                parts[3] = this->file_Manager.readRile(IDs[i] + 'e', this->disk_E);
             else
-                parts[3] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_E);
+                parts[3] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_E);
         }
 
         if (lost_Disk_Name == "Disk_D") { // CASE WERE DISK_A WAS LOST
-            if (this->file_Manager.checkLocation(this->disk_A + "/" + std::to_string(IDs[i]) + 'a' + ".txt"))
-                parts[0] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'a', this->disk_A);
+            if (this->file_Manager.checkLocation(this->disk_A + "/" + IDs[i] + 'a' + ".txt"))
+                parts[0] = this->file_Manager.readRile(IDs[i] + 'a', this->disk_A);
             else
-                parts[0] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_A);
-            if (this->file_Manager.checkLocation(this->disk_B + "/" + std::to_string(IDs[i]) + 'b' + ".txt"))
-                parts[1] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'b', this->disk_B);
+                parts[0] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_A);
+            if (this->file_Manager.checkLocation(this->disk_B + "/" + IDs[i] + 'b' + ".txt"))
+                parts[1] = this->file_Manager.readRile(IDs[i] + 'b', this->disk_B);
             else
-                parts[1] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_B);
-            if (this->file_Manager.checkLocation(this->disk_C + "/" + std::to_string(IDs[i]) + 'c' + ".txt"))
-                parts[2] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'c', this->disk_C);
+                parts[1] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_B);
+            if (this->file_Manager.checkLocation(this->disk_C + "/" + IDs[i] + 'c' + ".txt"))
+                parts[2] = this->file_Manager.readRile(IDs[i] + 'c', this->disk_C);
             else
-                parts[2] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_C);
-            if (this->file_Manager.checkLocation(this->disk_E + "/" + std::to_string(IDs[i]) + 'e' + ".txt"))
-                parts[3] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'e', this->disk_E);
+                parts[2] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_C);
+            if (this->file_Manager.checkLocation(this->disk_E + "/" + IDs[i] + 'e' + ".txt"))
+                parts[3] = this->file_Manager.readRile(IDs[i] + 'e', this->disk_E);
             else
-                parts[3] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_E);
+                parts[3] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_E);
         }
 
         if (lost_Disk_Name == "Disk_E") { // CASE WERE DISK_A WAS LOST
-            if (this->file_Manager.checkLocation(this->disk_E + "/" + std::to_string(IDs[i]) + 'a' + ".txt"))
-                parts[0] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'a', this->disk_A);
+            if (this->file_Manager.checkLocation(this->disk_E + "/" + IDs[i] + 'a' + ".txt"))
+                parts[0] = this->file_Manager.readRile(IDs[i] + 'a', this->disk_A);
             else
-                parts[0] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_A);
-            if (this->file_Manager.checkLocation(this->disk_B + "/" + std::to_string(IDs[i]) + 'b' + ".txt"))
-                parts[1] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'b', this->disk_B);
+                parts[0] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_A);
+            if (this->file_Manager.checkLocation(this->disk_B + "/" + IDs[i] + 'b' + ".txt"))
+                parts[1] = this->file_Manager.readRile(IDs[i] + 'b', this->disk_B);
             else
-                parts[1] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_B);
-            if (this->file_Manager.checkLocation(this->disk_C + "/" + std::to_string(IDs[i]) + 'c' + ".txt"))
-                parts[2] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'c', this->disk_C);
+                parts[1] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_B);
+            if (this->file_Manager.checkLocation(this->disk_C + "/" + IDs[i] + 'c' + ".txt"))
+                parts[2] = this->file_Manager.readRile(IDs[i] + 'c', this->disk_C);
             else
-                parts[2] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_C);
-            if (this->file_Manager.checkLocation(this->disk_D + "/" + std::to_string(IDs[i]) + 'd' + ".txt"))
-                parts[3] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'd', this->disk_D);
+                parts[2] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_C);
+            if (this->file_Manager.checkLocation(this->disk_D + "/" + IDs[i] + 'd' + ".txt"))
+                parts[3] = this->file_Manager.readRile(IDs[i] + 'd', this->disk_D);
             else
-                parts[3] = this->file_Manager.readRile(std::to_string(IDs[i]) + 'p', this->disk_D);
+                parts[3] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_D);
 
         }
 
@@ -318,6 +318,7 @@ void RAIDManager::repairDisk() {
         this->file_Manager.createFile(lost_File_Name,lost_Disk_Location,lost_File_Data);
     }
 }
+
 /**
  * Splits the image string into four parts
  * @param image string to divide
@@ -383,5 +384,13 @@ std::string RAIDManager::parityCalculator(std::string* parts_Of_Image) {
         parity += std::to_string(((a ^ b) ^ c) ^ d);
     }
     return parity;
+}
+
+void RAIDManager::saveIDs() {
+
+}
+
+void RAIDManager::checkIDs() {
+
 }
 

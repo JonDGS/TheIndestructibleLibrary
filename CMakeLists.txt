@@ -7,4 +7,4 @@ Set(CMAKE_CXX_FLAGS  -pthread)
 
 
 
-add_executable(TheIndestructibleLibrary main.cpp GenericLinkedList.h GenericNode.h RAID/FileManager.cpp RAID/FileManager.h RAID/RAIDManager.cpp RAID/RAIDManager.h)
+add_executable(TheIndestructibleLibrary main.cpp  RAID/FileManager.cpp RAID/FileManager.h RAID/RAIDManager.cpp RAID/RAIDManager.h Database/MetaController.cpp Database/MetaController.h)
