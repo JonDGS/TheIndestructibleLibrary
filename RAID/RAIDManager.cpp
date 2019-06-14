@@ -122,27 +122,27 @@ void RAIDManager::deleteFile(std::string ID) {
         this->repairDisk();
 
     // DELETES ALL THE PARTS ASSOCIATED TO THE PASSED ID
-    if (this->file_Manager.checkLocation(this->disk_A + "/" + ID + "a" + ".txt"))
+    if (this->file_Manager.checkLocation(this->disk_A + "/" + ID + "a" + this->file_Manager.getType()))
         this->file_Manager.deleteFile(ID + "a",this->disk_A);
     else
         this->file_Manager.deleteFile(ID + "p",this->disk_A);
 
-    if (this->file_Manager.checkLocation(this->disk_B + "/" + ID + "b" + ".txt"))
+    if (this->file_Manager.checkLocation(this->disk_B + "/" + ID + "b" + this->file_Manager.getType()))
         this->file_Manager.deleteFile(ID + "b",this->disk_B);
     else
         this->file_Manager.deleteFile(ID + "p",this->disk_B);
 
-    if (this->file_Manager.checkLocation(this->disk_C + "/" + ID + "c" + ".txt"))
+    if (this->file_Manager.checkLocation(this->disk_C + "/" + ID + "c" + this->file_Manager.getType()))
         this->file_Manager.deleteFile(ID + "c",this->disk_C);
     else
         this->file_Manager.deleteFile(ID + "p",this->disk_C);
 
-    if (this->file_Manager.checkLocation(this->disk_D + "/" + ID + "d" + ".txt"))
+    if (this->file_Manager.checkLocation(this->disk_D + "/" + ID + "d" + this->file_Manager.getType()))
         this->file_Manager.deleteFile(ID + "d",this->disk_D);
     else
         this->file_Manager.deleteFile(ID + "p",this->disk_D);
 
-    if (this->file_Manager.checkLocation(this->disk_E + "/" + ID + "e" + ".txt"))
+    if (this->file_Manager.checkLocation(this->disk_E + "/" + ID + "e" + this->file_Manager.getType()))
         this->file_Manager.deleteFile(ID + "e",this->disk_E);
     else
         this->file_Manager.deleteFile(ID + "p",this->disk_E);
@@ -227,109 +227,108 @@ void RAIDManager::repairDisk() {
         std::string lost_File_Data;
 
         // WE CHECK IF THE PARITY IS OUTSIDE OF THE LOST DISK, TO KNOW WHICH FULL NAME THE LOST FILE HAD
-        if (this->file_Manager.checkLocation(this->disk_A + "/" + this->IDs[i] + "p" + ".txt") ||
-            this->file_Manager.checkLocation(this->disk_B + "/" + this->IDs[i] + "p" + ".txt") ||
-            this->file_Manager.checkLocation(this->disk_C + "/" + this->IDs[i] + "p" + ".txt") ||
-            this->file_Manager.checkLocation(this->disk_D + "/" + this->IDs[i] + "p" + ".txt") ||
-            this->file_Manager.checkLocation(this->disk_E + "/" + this->IDs[i] + "p" + ".txt"))
+        if (this->file_Manager.checkLocation(this->disk_A + "/" + this->IDs[i] + "p" + this->file_Manager.getType()) ||
+            this->file_Manager.checkLocation(this->disk_B + "/" + this->IDs[i] + "p" + this->file_Manager.getType()) ||
+            this->file_Manager.checkLocation(this->disk_C + "/" + this->IDs[i] + "p" + this->file_Manager.getType()) ||
+            this->file_Manager.checkLocation(this->disk_D + "/" + this->IDs[i] + "p" + this->file_Manager.getType()) ||
+            this->file_Manager.checkLocation(this->disk_E + "/" + this->IDs[i] + "p" + this->file_Manager.getType()))
             lost_File_Name += lost_File_Char;
         else
             lost_File_Name += 'p';
 
         if (lost_Disk_Name == "Disk_A") { // CASE WERE DISK_A WAS LOST
-            if (this->file_Manager.checkLocation(this->disk_B + "/" + IDs[i] + 'b' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_B + "/" + IDs[i] + 'b' + this->file_Manager.getType()))
                 parts[0] = this->file_Manager.readRile(IDs[i] + 'b', this->disk_B);
             else
                 parts[0] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_B);
-            if (this->file_Manager.checkLocation(this->disk_C + "/" + IDs[i] + 'c' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_C + "/" + IDs[i] + 'c' + this->file_Manager.getType()))
                 parts[1] = this->file_Manager.readRile(IDs[i] + 'c', this->disk_C);
             else
                 parts[1] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_C);
-            if (this->file_Manager.checkLocation(this->disk_D + "/" + IDs[i] + 'd' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_D + "/" + IDs[i] + 'd' + this->file_Manager.getType()))
                 parts[2] = this->file_Manager.readRile(IDs[i] + 'd', this->disk_D);
             else
                 parts[2] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_D);
-            if (this->file_Manager.checkLocation(this->disk_E + "/" + IDs[i] + 'e' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_E + "/" + IDs[i] + 'e' + this->file_Manager.getType()))
                 parts[3] = this->file_Manager.readRile(IDs[i] + 'e', this->disk_E);
             else
                 parts[3] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_E);
         }
 
         if (lost_Disk_Name == "Disk_B") { // CASE WERE DISK_A WAS LOST
-            if (this->file_Manager.checkLocation(this->disk_A + "/" + IDs[i] + 'a' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_A + "/" + IDs[i] + 'a' + this->file_Manager.getType()))
                 parts[0] = this->file_Manager.readRile(IDs[i] + 'a', this->disk_A);
             else
                 parts[0] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_A);
-            if (this->file_Manager.checkLocation(this->disk_C + "/" + IDs[i] + 'c' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_C + "/" + IDs[i] + 'c' + this->file_Manager.getType()))
                 parts[1] = this->file_Manager.readRile(IDs[i] + 'c', this->disk_C);
             else
                 parts[1] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_C);
-            if (this->file_Manager.checkLocation(this->disk_D + "/" + IDs[i] + 'd' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_D + "/" + IDs[i] + 'd' + this->file_Manager.getType()))
                 parts[2] = this->file_Manager.readRile(IDs[i] + 'd', this->disk_D);
             else
                 parts[2] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_D);
-            if (this->file_Manager.checkLocation(this->disk_E + "/" + IDs[i] + 'e' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_E + "/" + IDs[i] + 'e' + this->file_Manager.getType()))
                 parts[3] = this->file_Manager.readRile(IDs[i] + 'e', this->disk_E);
             else
                 parts[3] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_E);
         }
 
         if (lost_Disk_Name == "Disk_C") { // CASE WERE DISK_A WAS LOST
-            if (this->file_Manager.checkLocation(this->disk_A + "/" + IDs[i] + 'a' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_A + "/" + IDs[i] + 'a' + this->file_Manager.getType()))
                 parts[0] = this->file_Manager.readRile(IDs[i] + 'a', this->disk_A);
             else
                 parts[0] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_A);
-            if (this->file_Manager.checkLocation(this->disk_B + "/" + IDs[i] + 'b' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_B + "/" + IDs[i] + 'b' + this->file_Manager.getType()))
                 parts[1] = this->file_Manager.readRile(IDs[i] + 'b', this->disk_B);
             else
                 parts[1] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_B);
-            if (this->file_Manager.checkLocation(this->disk_D + "/" + IDs[i] + 'd' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_D + "/" + IDs[i] + 'd' + this->file_Manager.getType()))
                 parts[2] = this->file_Manager.readRile(IDs[i] + 'd', this->disk_D);
             else
                 parts[2] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_D);
-            if (this->file_Manager.checkLocation(this->disk_E + "/" + IDs[i] + 'e' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_E + "/" + IDs[i] + 'e' + this->file_Manager.getType()))
                 parts[3] = this->file_Manager.readRile(IDs[i] + 'e', this->disk_E);
             else
                 parts[3] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_E);
         }
 
         if (lost_Disk_Name == "Disk_D") { // CASE WERE DISK_A WAS LOST
-            if (this->file_Manager.checkLocation(this->disk_A + "/" + IDs[i] + 'a' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_A + "/" + IDs[i] + 'a' + this->file_Manager.getType()))
                 parts[0] = this->file_Manager.readRile(IDs[i] + 'a', this->disk_A);
             else
                 parts[0] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_A);
-            if (this->file_Manager.checkLocation(this->disk_B + "/" + IDs[i] + 'b' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_B + "/" + IDs[i] + 'b' + this->file_Manager.getType()))
                 parts[1] = this->file_Manager.readRile(IDs[i] + 'b', this->disk_B);
             else
                 parts[1] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_B);
-            if (this->file_Manager.checkLocation(this->disk_C + "/" + IDs[i] + 'c' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_C + "/" + IDs[i] + 'c' + this->file_Manager.getType()))
                 parts[2] = this->file_Manager.readRile(IDs[i] + 'c', this->disk_C);
             else
                 parts[2] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_C);
-            if (this->file_Manager.checkLocation(this->disk_E + "/" + IDs[i] + 'e' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_E + "/" + IDs[i] + 'e' + this->file_Manager.getType()))
                 parts[3] = this->file_Manager.readRile(IDs[i] + 'e', this->disk_E);
             else
                 parts[3] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_E);
         }
 
         if (lost_Disk_Name == "Disk_E") { // CASE WERE DISK_A WAS LOST
-            if (this->file_Manager.checkLocation(this->disk_E + "/" + IDs[i] + 'a' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_E + "/" + IDs[i] + 'a' + this->file_Manager.getType()))
                 parts[0] = this->file_Manager.readRile(IDs[i] + 'a', this->disk_A);
             else
                 parts[0] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_A);
-            if (this->file_Manager.checkLocation(this->disk_B + "/" + IDs[i] + 'b' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_B + "/" + IDs[i] + 'b' + this->file_Manager.getType()))
                 parts[1] = this->file_Manager.readRile(IDs[i] + 'b', this->disk_B);
             else
                 parts[1] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_B);
-            if (this->file_Manager.checkLocation(this->disk_C + "/" + IDs[i] + 'c' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_C + "/" + IDs[i] + 'c' + this->file_Manager.getType()))
                 parts[2] = this->file_Manager.readRile(IDs[i] + 'c', this->disk_C);
             else
                 parts[2] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_C);
-            if (this->file_Manager.checkLocation(this->disk_D + "/" + IDs[i] + 'd' + ".txt"))
+            if (this->file_Manager.checkLocation(this->disk_D + "/" + IDs[i] + 'd' + this->file_Manager.getType()))
                 parts[3] = this->file_Manager.readRile(IDs[i] + 'd', this->disk_D);
             else
                 parts[3] = this->file_Manager.readRile(IDs[i] + 'p', this->disk_D);
-
         }
 
         lost_File_Data = parityCalculator(parts);
@@ -405,6 +404,9 @@ std::string RAIDManager::parityCalculator(std::string* parts_Of_Image) {
     return parity;
 }
 
+/**
+ * This method should take the Ids stored on the IDs vector and save them to a file in disk
+ */
 void RAIDManager::saveIDs() {
     // EMPTIES THE BACKUP FILE
     this->file_Manager.emptyFile("IDs",this->RAID5);
@@ -415,12 +417,16 @@ void RAIDManager::saveIDs() {
 
     std::string backup_IDs;
 
-    for (int i = 0;i < this->IDs.size();i++)
-        backup_IDs += this->IDs[i] + "/";
+    for (const auto & ID : this->IDs)
+        backup_IDs += ID + "/";
 
     this->file_Manager.addData("IDs",this->RAID5,backup_IDs);
 }
 
+/**
+ * This method should check the backup file of the IDs and complete the vector in the case the vector is lacking any
+ * of the IDs stored on the backup file
+ */
 void RAIDManager::checkIDs() {
     if (this->file_Manager.readRile("IDs",this->RAID5).length() == 0)
         return;
@@ -431,11 +437,11 @@ void RAIDManager::checkIDs() {
 
     bool word_Zone;
 
-    for (int i = 0;i < backup.length();i++) {
-        word_Zone = backup[i] != '/';
+    for (char i : backup) {
+        word_Zone = i != '/';
 
         if (word_Zone)
-            ID += backup[i];
+            ID += i;
 
         else {
             this->IDs.push_back(ID);
@@ -443,4 +449,3 @@ void RAIDManager::checkIDs() {
         }
     }
 }
-

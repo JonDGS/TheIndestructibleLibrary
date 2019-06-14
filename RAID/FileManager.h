@@ -77,4 +77,6 @@ public:
      * @return the status of the file or directory
      */
     bool checkLocation(std::string path);
+
+    std::string getType();
 };

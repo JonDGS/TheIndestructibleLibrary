@@ -31,7 +31,7 @@ int main() {
 
     // */
 
-    rm.deleteFile("EARTH");
+    // rm.deleteFile("EARTH");
 
     return 0;
 }

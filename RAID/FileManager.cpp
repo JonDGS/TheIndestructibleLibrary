@@ -119,3 +119,7 @@ bool FileManager::checkLocation(std::string path) {
 
     return status;
 }
+
+std::string FileManager::getType() {
+    return this->type;
+}
