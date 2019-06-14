@@ -4,14 +4,17 @@
 
 #include "RAIDManager.h"
 
+/**
+ * Main constructor or the class, assign and initializes al the needed members of the class
+ */
 RAIDManager::RAIDManager() {
-    this->RAID5 = "/media/alvar/AVM/RAID5";
+    this->RAID5 = "../RAID Manager/RAID5";
 
-    this->disk_A = "/media/alvar/AVM/RAID5/Disk_A";
-    this->disk_B = "/media/alvar/AVM/RAID5/Disk_B";
-    this->disk_C = "/media/alvar/AVM/RAID5/Disk_C";
-    this->disk_D = "/media/alvar/AVM/RAID5/Disk_D";
-    this->disk_E = "/media/alvar/AVM/RAID5/Disk_E";
+    this->disk_A = "../RAID Manager/RAID5/Disk_A";
+    this->disk_B = "../RAID Manager/RAID5/Disk_B";
+    this->disk_C = "../RAID Manager/RAID5/Disk_C";
+    this->disk_D = "../RAID Manager/RAID5/Disk_D";
+    this->disk_E = "../RAID Manager/RAID5/Disk_E";
 
     this->n_Files = 0;
 

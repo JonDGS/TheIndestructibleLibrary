@@ -1,5 +1,6 @@
-#include "RAID/FileManager.h"
-#include "RAID/RAIDManager.h"
+#include "RAID Manager/FileManager.h"
+#include "RAID Manager/RAIDManager.h"
+#include "Database/MetaController.h"
 
 #include <string>
 #include <thread>
@@ -7,7 +8,7 @@
 int main() {
     RAIDManager rm;
 
-    // /*
+    /*
 
     rm.saveFile("MOON", "100100101001100111011100101101011101101101100010");
     rm.saveFile("EARTH", "100100101010100101101100101101011101101101100010");
@@ -29,9 +30,13 @@ int main() {
 
     rm.deleteFile("SUN");
 
-    // */
+    */
 
     rm.deleteFile("EARTH");
+
+    //MetaController mt = MetaController();
+    //mt.commit("Alvaro");
+
 
     return 0;
 }

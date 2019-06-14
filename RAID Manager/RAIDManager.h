@@ -10,22 +10,59 @@
 #include <string>
 #include "FileManager.h"
 
-
+/**
+ * Manages the RAID 5, uses three methods as the interface, save, delete and get file
+ */
 class RAIDManager {
 private:
+    /**
+     * Instance of the file manager class used for managing files
+     */
     FileManager file_Manager;
 
+    /**
+     * Path to the RAID 5 folder
+     */
     std::string RAID5;
+
+    /**
+     * Path to the disk A
+     */
     std::string disk_A;
+
+    /**
+     * Path to the disk B
+     */
     std::string disk_B;
+
+    /**
+     * Path to the disk C
+     */
     std::string disk_C;
+
+    /**
+     * Path to the disk D
+     */
     std::string disk_D;
+
+    /**
+     * Path to the disk E
+     */
     std::string disk_E;
 
+    /**
+     * Counter for the umber of files in the
+     */
     int n_Files;
 
+    /**
+     * A vector for storing the IDs of the stored files
+     */
     std::vector<std::string> IDs;
 
+    /**
+     * A variable used for the distribution of parity files
+     */
     int parity_Allocator;
 
     /**
@@ -67,6 +104,9 @@ private:
     void checkIDs();
 
 public:
+    /**
+     * Main constructor or the class, assign and initializes al the needed members of the class
+     */
     RAIDManager();
 
     /**
