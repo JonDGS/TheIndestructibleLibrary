@@ -18,6 +18,7 @@
 #include <sys/time.h> //FD_SET, FD_ISSET, FD_ZERO macros
 #include <iostream>
 #include "Netpackage.h"
+#include "../Structure/GenericLinkedList.h"
 
 #define TRUE   1
 #define FALSE  0
@@ -26,6 +27,10 @@
 class Server{
 public:
     static int start();
+    static bool hasSession(std::string user);
+    static void closeSession(std::string user);
+private:
+    static GenericLinkedList<std::string>* currentUsers;
 };
 
 #endif //THEINDESTRUCTIBLELIBRARY_SERVER_H
