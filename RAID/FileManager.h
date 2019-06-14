@@ -35,6 +35,14 @@ public:
     void createFile(std::string file_Name,std::string file_Location,std::string file_Data);
 
     /**
+     * Adds data to an already existing file
+     * @param file_Name to which add data
+     * @param file_Location where the file is located
+     * @param file_Data to add to the file
+     */
+    void addData(std::string file_Name,std::string file_Location,std::string file_Data);
+
+    /**
      * Gives back the info stored on the file
      * @param file_Name name of the file to get the data from
      * @param file_Location where the file is located

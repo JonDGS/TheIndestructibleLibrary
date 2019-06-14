@@ -17,9 +17,12 @@ RAIDManager::RAIDManager() {
 
     this->parity_Allocator = 5;
 
-    // CHECKS IF OT HAS TO REPAIR ANY DISK
+    // CHECKS IF IT HAS TO REPAIR ANY DISK
     if (!this->disksOnline())
         this->repairDisk();
+
+    // CHECKS FOR ANY ID ON THE BACKUP
+    checkIDs();
 }
 
 /**
@@ -81,6 +84,9 @@ void RAIDManager::saveFile(std::string ID, std::string file) {
 
     // ADDS ONE TO THE FILES COUNTER
     this->n_Files++;
+
+    // UPDATES THE BACKUP IDs
+    saveIDs();
 }
 
 /**
@@ -149,6 +155,9 @@ void RAIDManager::deleteFile(std::string ID) {
         if (this->IDs[i] == ID)
             this->IDs.erase(this->IDs.begin() + i);
     }
+
+    // UPDATES THE BACKUP IDs
+    saveIDs();
 }
 
 /**
@@ -397,13 +406,41 @@ std::string RAIDManager::parityCalculator(std::string* parts_Of_Image) {
 }
 
 void RAIDManager::saveIDs() {
-    // IF THERE ARE NO IDs TO STORE EMPTIES THE BACKUP FILE
+    // EMPTIES THE BACKUP FILE
+    this->file_Manager.emptyFile("IDs",this->RAID5);
+
+    // IF THERE ARE NO IDs TO STORE STOPS
     if (this->IDs.empty())
+        return;
 
+    std::string backup_IDs;
 
+    for (int i = 0;i < this->IDs.size();i++)
+        backup_IDs += this->IDs[i] + "/";
+
+    this->file_Manager.addData("IDs",this->RAID5,backup_IDs);
 }
 
 void RAIDManager::checkIDs() {
+    if (this->file_Manager.readRile("IDs",this->RAID5).length() == 0)
+        return;
 
+    std::string backup = this->file_Manager.readRile("IDs",this->RAID5);
+
+    std::string ID;
+
+    bool word_Zone;
+
+    for (int i = 0;i < backup.length();i++) {
+        word_Zone = backup[i] != '/';
+
+        if (word_Zone)
+            ID += backup[i];
+
+        else {
+            this->IDs.push_back(ID);
+            ID.clear();
+        }
+    }
 }
 

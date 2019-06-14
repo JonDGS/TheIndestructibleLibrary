@@ -24,6 +24,25 @@ void FileManager::createFile(std::string file_Name, std::string file_Location, s
 }
 
 /**
+ * Adds data to an already existing file
+ * @param file_Name to which add data
+ * @param file_Location where the file is located
+ * @param file_Data to add to the file
+ */
+void FileManager::addData(std::string file_Name, std::string file_Location, std::string file_Data) {
+    std::ofstream file;
+
+    file.open(file_Location + "/" + file_Name + this->type,std::ios::app);
+
+    if (file.fail())
+        std::cout << "FILE: " + file_Name + " , COULD NOT ADDED DATA" << std::endl;
+
+    file << file_Data;
+
+    file.close();
+}
+
+/**
  * Gives back the info stored on the file
  * @param file_Name name of the file to get the data from
  * @param file_Location where the file is located
@@ -100,5 +119,3 @@ bool FileManager::checkLocation(std::string path) {
 
     return status;
 }
-
-
