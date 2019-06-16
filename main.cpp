@@ -6,7 +6,7 @@
 #include <thread>
 
 int main() {
-    RAIDManager rm;
+    //RAIDManager rm;
 
     /*
 
@@ -32,11 +32,11 @@ int main() {
 
     */
 
-    rm.deleteFile("EARTH");
+    //rm.deleteFile("EARTH");
 
     //MetaController mt = MetaController();
-    //mt.commit("Alvaro");
-
+    //mt.commit("Test");
+    //mt.commit("Jojojo");
 
     return 0;
 }

@@ -17,7 +17,7 @@ struct comp{
 MetaController::MetaController() {
 
     ifstream curr;
-    curr.open("../metabase/current.json");
+    curr.open("../Database/metadata/current.json");
     string temp;
     while(getline(curr,temp)){
         cout<<"\nReading compressed current database: "+temp<<endl;
@@ -26,7 +26,7 @@ MetaController::MetaController() {
     curr.close();
 
     ifstream pre;
-    pre.open("../metabase/previous.json");
+    pre.open("../Database/metadata/previous.json");
     while(getline(pre,temp)){
         cout<<"\nReading compressed previous database: "+temp<<endl;
         previousDB.append(getUncompressed(temp));
@@ -60,12 +60,12 @@ string MetaController::rollBack() {
 void MetaController::writeJSONS() {
     cout<<"\nWriting database to JSON files...\n";
     ofstream currStream;
-    currStream.open("../metabase/current.json", ofstream::trunc);
+    currStream.open("../Database/metadata/current.json", ofstream::trunc);
     currStream << getCompressed(currentDB);
     currStream.close();
 
     ofstream preStream;
-    preStream.open("../metabase/previous.json", ofstream::trunc);
+    preStream.open("../Database/metadata/previous.json", ofstream::trunc);
     preStream << getCompressed(previousDB);
     preStream.close();
     cout<<"\nWriting finished, JSON files up to date\n";
@@ -175,7 +175,7 @@ string MetaController::getCompressed(string text) {
 }
 
 string MetaController::getUncompressed(string str) {
-    cout<<"\n----------\nStarting Huffman uncompression of: "+str<<endl;
+    cout<<"\n----------\nStarting Huffman decompression of: "+str<<endl;
     str.erase(0,23);
     string db = str.substr(0, str.find("\""));
     str.erase(0, str.find("\"")+1);
@@ -233,6 +233,6 @@ string MetaController::getUncompressed(string str) {
             tempSize++;
         }
     }
-    cout<<"\nUncompression successfully finished\n----------\n";
+    cout<<"\nDecompression successfully finished\n----------\n";
     return original;
 }
