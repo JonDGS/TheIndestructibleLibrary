@@ -10,11 +10,11 @@
 RAIDManager::RAIDManager() {
     this->RAID5 = "../RAID Manager/RAID5";
 
-    this->disk_A = "../RAID Manager/RAID5/Disk_A";
-    this->disk_B = "../RAID Manager/RAID5/Disk_B";
-    this->disk_C = "../RAID Manager/RAID5/Disk_C";
-    this->disk_D = "../RAID Manager/RAID5/Disk_D";
-    this->disk_E = "../RAID Manager/RAID5/Disk_E";
+    this->disk_A = this->RAID5 + "/Disk_A";
+    this->disk_B = this->RAID5 + "/Disk_B";
+    this->disk_C = this->RAID5 + "/Disk_C";
+    this->disk_D = this->RAID5 + "/Disk_D";
+    this->disk_E = this->RAID5 + "/Disk_E";
 
     this->n_Files = 0;
 
@@ -103,7 +103,7 @@ std::string RAIDManager::getFile(std::string ID) {
         this->repairDisk();
 
     // DECLARES THE STRING TO RETURN
-    std::string data;
+    std::string data = "";
 
     // TAKES ALL THE PARTS AND COMBINES THEM
     data += this->file_Manager.readRile(ID + "a",this->disk_A);
