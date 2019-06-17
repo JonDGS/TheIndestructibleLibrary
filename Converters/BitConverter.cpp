@@ -90,8 +90,6 @@ std::string BitConverter::convertImageToStringBits(std::string path) {
     std::string result;
 
     for(int i = 0; i < len; i++){
-        std::cout << buf[i] << std::endl;
-        std::cout << std::bitset<8>(buf[i]) << std::endl;
         std::bitset<8> current = std::bitset<8>(buf[i]);
         result += current.to_string();
     }

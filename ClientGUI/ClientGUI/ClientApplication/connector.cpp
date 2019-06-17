@@ -92,7 +92,26 @@ std::string Connector::get(std::string user, std::string request, std::string da
             break;
         case 1:
         {
-
+            //uploadImage
+            GenericLinkedList<std::string>* bitsInfoList = convertStringToLL(data);
+            std::string bitsName = bitsInfoList->get(0)->getData();
+            std::string bitsLen = bitsInfoList->get(1)->getData();
+            std::string bits = bitsInfoList->get(2)->getData();
+            std::string bitsDataString = bitsName + ',' + bitsLen;
+            netpack.setData(bitsDataString);
+            netpack.setCommand("uploadImage");
+            std::string bitsDataInfo = netpack.getJSONPackage();
+            send(sock, bitsDataInfo.c_str(), strlen(bitsDataInfo.c_str()), 0);
+            int firstResponse = recv(sock, buf, 4096, 0);
+            netpack.setData(bits);
+            std::string bitsString = netpack.getJSONPackage();
+            send(sock, bitsString.c_str(), strlen(bitsString.c_str()), 0);
+            int bytesReceived = recv(sock, buf, 4096, 0);
+            std::string preResponse = std::string(buf, bytesReceived);
+            rapidjson::Document doc = netpack.convertToRJ_Document(preResponse);
+            std::string response = doc["NetPackage"]["command"].GetString();
+            close(sock);
+            return response;
         }
             break;
         case 4:

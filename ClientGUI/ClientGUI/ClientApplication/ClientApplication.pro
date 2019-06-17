@@ -26,9 +26,11 @@ CONFIG += c++11
 
 SOURCES += \
         actionswindow.cpp \
+        bitconverter.cpp \
         connector.cpp \
         genericlinkedlist.cpp \
         genericnode.cpp \
+        imagepackage.cpp \
         imgtable.cpp \
         keyvalue.cpp \
         main.cpp \
@@ -41,9 +43,11 @@ SOURCES += \
 
 HEADERS += \
         actionswindow.h \
+        bitconverter.h \
         connector.h \
         genericlinkedlist.h \
         genericnode.h \
+        imagepackage.h \
         imgtable.h \
         keyvalue.h \
         mainwindow.h \

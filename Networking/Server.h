@@ -19,6 +19,8 @@
 #include <iostream>
 #include "Netpackage.h"
 #include "../Structure/GenericLinkedList.h"
+#include "../RAID Manager/RAIDManager.h"
+#include "../Database/MetaController.h"
 
 #define TRUE   1
 #define FALSE  0
@@ -33,6 +35,7 @@ public:
 private:
     inline static GenericLinkedList<std::string>* currentUsers;
     inline static GenericLinkedList<std::string>* users;
+    inline static RAIDManager* raidManager;
 };
 
 #endif //THEINDESTRUCTIBLELIBRARY_SERVER_H

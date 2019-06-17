@@ -19,6 +19,7 @@ public:
     void setUsernameLabel(std::string);
 
 private slots:
+
     void on_uploadPushButton_clicked();
 
     void on_managePushButton_clicked();
@@ -27,6 +28,7 @@ private:
     Ui::SelectionWindow *ui;
     ActionsWindow* actionsWindow;
     SQLManagementWindow* sqlManagementWindow;
+    std::string user;
 };
 
 #endif // SELECTIONWINDOW_H

@@ -7,14 +7,33 @@
 
 #include "Netpackage.h"
 
+//Definition of Metadata
+struct Metadata {
+    std::string name;
+    std::string author;
+    std::string date;
+    std::string size;
+    std::string description;
+};
+
+//Definition of enums
+enum attributes{
+    name = 0,
+    author,
+    date,
+    size,
+    description,
+};
+
 class ImagePackage : public NetPackage{
 private :
-    std::string metadata = "NONE";
+    Metadata* metadata;
 public:
     ImagePackage();
-    std::string getMetadata();
-    void setMetadata(std::string metadata);
+    void setMetadata(std::string name, std::string author, std::string date, std::string size, std::string description);
+    std::string getAttribute(enum attributes attribute);
     std::string getJSONPackage();
+    std::string metaDataToJson();
 };
 
 

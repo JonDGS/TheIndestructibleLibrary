@@ -15,11 +15,13 @@ SelectionWindow::~SelectionWindow()
 
 void SelectionWindow::setUsernameLabel(std::string user){
     ui->usernamLabel->setText("Logged-in as: " + QString::fromStdString(user));
+    this->user = user;
 }
 
 void SelectionWindow::on_uploadPushButton_clicked()
 {
     this->actionsWindow = new ActionsWindow;
+    this->actionsWindow->setUser(user);
     this->hide();
     this->actionsWindow->show();
 }

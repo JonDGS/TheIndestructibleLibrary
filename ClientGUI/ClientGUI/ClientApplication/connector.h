@@ -12,6 +12,7 @@
 #include <string>
 
 #include "netpackage.h"
+#include "imagepackage.h"
 #include "genericlinkedlist.h"
 
 /**

@@ -90,6 +90,7 @@ int Server::start() {
 
     Server::currentUsers = new GenericLinkedList<std::string>;
     Server::users = new GenericLinkedList<std::string>;
+    Server::raidManager = new RAIDManager;
 
 
     int opt = TRUE;
@@ -229,7 +230,7 @@ int Server::start() {
                     std::string command = doc["NetPackage"]["command"].GetString();
 
                     std::string user = doc["NetPackage"]["from"].GetString();
-
+                    std::cout << command << std::endl;
                     int commandInt = convertCommandToInt(command);
                     std::cout << commandInt << std::endl;
                     NetPackage *netpack = new NetPackage();
@@ -241,14 +242,41 @@ int Server::start() {
                         case 1:
                         {
                             //uploadImage
+                            std::string bitsInfoString = doc["NetPackage"]["data"].GetString();
+                            GenericLinkedList<std::string>* bitsInfoList = convertStringToLL(bitsInfoString, ',');
+                            std::string bitsLen = bitsInfoList->get(0)->getData();
+                            std::string bitsName = bitsInfoList->get(1)->getData();
+                            int bitsLength = std::stoi(bitsLen);
+                            char bigBuffer[bitsLength];
+                            netpack->setCommand("RECEIVED");
+                            std::string final = netpack->getJSONPackage();
+                            send(sd, final.c_str(), strlen(final.c_str()), 0);
+                            int bitsReceived = recv(sd, bigBuffer, bitsLength, 0);
+                            std::string bits = std::string(bigBuffer, bitsLength);
+                            raidManager->saveFile(bitsName, bits);
+                            netpack->setCommand("RECEIVED");
+                            final = netpack->getJSONPackage();
+                            send(sd, final.c_str(), strlen(final.c_str()), 0);
                         }break;
                         case 2:
                         {
                             //uploadMetadata
+                            std::string metaDataString = doc["NetPackage"]["data"].GetString();
+                            GenericLinkedList<std::string>* metadataList = convertStringToLL(metaDataString, ',');
+                            /*Store in database
+                             * metaDB.save();
+                             */
+                            netpack->setCommand("RECEIVED");
+                            std::string final = netpack->getJSONPackage();
+                            send(sd, final.c_str(), strlen(final.c_str()), 0);
                         }break;
                         case 3:
                         {
                             //deleteImage
+                            std::string name = doc["NetPackage"]["data"].GetString();
+                            raidManager->deleteFile(name);
+
+
                         }break;
                         case 4:
                         {
