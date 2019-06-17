@@ -1,0 +1,145 @@
+#include "connector.h"
+#include "string"
+#include <sstream>
+
+Connector::Connector()
+{
+}
+
+GenericLinkedList<std::string>* convertStringToLL(std::string data){
+    std::stringstream ss(data);
+    GenericLinkedList<std::string>* list = new GenericLinkedList<std::string>;
+
+    while( ss.good() )
+    {
+        std::string substr;
+        getline( ss, substr, ',' );
+        list->add(substr);
+    }
+    return list;
+}
+
+bool Connector::checkLogInCredentials(std::string user, std::string password){
+    std::string answer = get(user, "registerAccount", password);
+    if(answer == "ACCEPTED"){
+        return true;
+    }return false;
+}
+
+int convertCommandToInt(std::string data) {
+    enum commands {
+        requestImage = 0,
+        uploadImage,
+        uploadMetadata,
+        deleteImage,
+        logIn,
+        logOut,
+        CHECK,
+        registerAccount
+    };
+    if (data == "requestImage") {
+            return requestImage;
+    }
+    if (data == "uploadImage") {
+        return uploadImage;
+    }
+    if (data == "uploadMetadata") {
+        return uploadMetadata;
+    }
+    if (data == "deleteImage") {
+        return deleteImage;
+    }
+    if (data == "logIn") {
+        return logIn;
+    }
+    if (data == "logOut") {
+        return logOut;
+    }
+    if (data == "CHECK") {
+        return CHECK;
+    }
+    if (data == "registerAccount") {
+        return registerAccount;
+    }
+    return -1;
+}
+
+std::string Connector::get(std::string user, std::string request, std::string data){
+        int sock = socket(AF_INET, SOCK_STREAM, 0);
+        if (sock == -1)
+        {
+        }
+        int port = 8888;
+        std::string ipAddress = "127.0.0.1";
+
+        sockaddr_in hint;
+        hint.sin_family = AF_INET;
+        hint.sin_port = htons(port);
+        inet_pton(AF_INET, ipAddress.c_str(), &hint.sin_addr);
+
+        int connectRes = connect(sock, (sockaddr*)&hint, sizeof(hint));
+
+        char buf[4096];
+        NetPackage netpack = NetPackage();
+        netpack.setFrom(user);
+        int requestStr = convertCommandToInt(request);
+        std::cout << requestStr << std::endl;
+        switch(requestStr){
+        case 0:
+        {
+
+        }
+            break;
+        case 1:
+        {
+
+        }
+            break;
+        case 4:
+            //LogIn
+        {
+           netpack.setCommand("LogIn");
+           std::string final = netpack.getJSONPackage();
+           send(sock, final.c_str(), strlen(final.c_str()), 0);
+           memset(buf, 0, 4096);
+           int bytesReceived = recv(sock, buf, 4096, 0);
+           std::string preResponse = std::string(buf, bytesReceived);
+           rapidjson::Document doc = netpack.convertToRJ_Document(preResponse);
+           std::string response = doc["NetPackage"]["command"].GetString();
+           close(sock);
+           return response;
+        }break;
+        case 6:
+            //CHECK
+        {
+            netpack.setCommand("CHECK");
+            std::string final = netpack.getJSONPackage();
+            send(sock, final.c_str(), strlen(final.c_str()), 0);
+            memset(buf, 0, 4096);
+            int bytesReceived = recv(sock, buf, 4096, 0);
+            std::string preResponse = std::string(buf, bytesReceived);
+            rapidjson::Document doc = netpack.convertToRJ_Document(preResponse);
+            std::string response = doc["NetPackage"]["command"].GetString();
+            close(sock);
+            return response;
+        }break;
+        case 7:
+        {
+          netpack.setCommand(request);
+          std::string final = netpack.getJSONPackage();
+          send(sock, final.c_str(), strlen(final.c_str()), 0);
+          memset(buf, 0, 4096);
+          int bytesReceived = recv(sock, buf, 4096, 0);
+          std::string preResponse = std::string(buf, bytesReceived);
+          rapidjson::Document doc = netpack.convertToRJ_Document(preResponse);
+          std::string response = doc["NetPackage"]["command"].GetString();
+          close(sock);
+          return response;
+        }break;
+        default:
+            close(sock);
+            break;
+        }
+
+        //close(sock);
+}

@@ -29,8 +29,10 @@ public:
     static int start();
     static bool hasSession(std::string user);
     static void closeSession(std::string user);
+    static bool isUser(std::string user);
 private:
-    static GenericLinkedList<std::string>* currentUsers;
+    inline static GenericLinkedList<std::string>* currentUsers;
+    inline static GenericLinkedList<std::string>* users;
 };
 
 #endif //THEINDESTRUCTIBLELIBRARY_SERVER_H

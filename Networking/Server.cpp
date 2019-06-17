@@ -8,7 +8,6 @@
 #include "Server.h"
 #include "../Structure/GenericLinkedList.h"
 
-
 GenericLinkedList<std::string> *convertStringToLL(std::string data, char limit) {
     std::stringstream ss(data);
     GenericLinkedList<std::string> *list = new GenericLinkedList<std::string>;
@@ -40,7 +39,9 @@ int convertCommandToInt(std::string data) {
         uploadMetadata,
         deleteImage,
         logIn,
-        logOut
+        logOut,
+        CHECK,
+        registerAccount
     };
     if (data == "requestImage") {
         return requestImage;
@@ -59,6 +60,12 @@ int convertCommandToInt(std::string data) {
     }
     if (data == "logOut") {
         return logOut;
+    }
+    if (data == "CHECK") {
+        return CHECK;
+    }
+    if (data == "registerAccount") {
+        return registerAccount;
     }
     return -1;
 }
@@ -81,12 +88,13 @@ bool Server::hasSession(std::string user) {
 
 int Server::start() {
 
-    currentUsers = new GenericLinkedList<std::string>();
+    Server::currentUsers = new GenericLinkedList<std::string>;
+    Server::users = new GenericLinkedList<std::string>;
 
 
     int opt = TRUE;
     int master_socket, addrlen, new_socket, client_socket[30],
-            max_clients = 1, activity, i, valread, sd;
+            max_clients = 30, activity, i, valread, sd;
     int max_sd;
     struct sockaddr_in address;
 
@@ -226,39 +234,87 @@ int Server::start() {
                     std::cout << commandInt << std::endl;
                     NetPackage *netpack = new NetPackage();
                     netpack->setFrom("Server");
-                    if(hasSession(user)) {
-                        switch (commandInt) {
-                            case 0: {
-                                netpack->setCommand("setStats");
-                                netpack->setData("");
+                    switch (commandInt) {
+                        case 0: {
+                            //requesting image
+                        }break;
+                        case 1:
+                        {
+                            //uploadImage
+                        }break;
+                        case 2:
+                        {
+                            //uploadMetadata
+                        }break;
+                        case 3:
+                        {
+                            //deleteImage
+                        }break;
+                        case 4:
+                        {
+                            //logIn
+                            currentUsers->add(user);
+                            std::cout << "User " << user << " has logged in" << std::endl;
+                            netpack->setCommand("LOGGED_IN");
+                            std::string final = netpack->getJSONPackage();
+                            send(sd, final.c_str(), strlen(final.c_str()), 0);
+                        }break;
+                        case 5:
+                        {
+                            //LogOut
+                            closeSession(user);
+                            netpack->setCommand("LOGGED_OUT");
+                            std::string final = netpack->getJSONPackage();
+                            send(sd, final.c_str(), strlen(final.c_str()), 0);
+                        }break;
+                        case 6:
+                        {
+                            //Check credentials
+                            if(isUser(user)){
+                                netpack->setCommand("CHECKED");
                                 std::string final = netpack->getJSONPackage();
-                                std::cout << "Voy a enviar " << final << std::endl;
                                 send(sd, final.c_str(), strlen(final.c_str()), 0);
-                            }
-                                break;
-                            default:
+                            }else{
                                 netpack->setCommand("INVALID");
                                 std::string final = netpack->getJSONPackage();
                                 send(sd, final.c_str(), strlen(final.c_str()), 0);
-                        }
-                    }else{
-                        switch(commandInt){
-                            case 4:
-                            {
-                                currentUsers->add(user);
                             }
-                            break;
-                            case 5:
-                            {
-                                closeSession(user);
+                        }break;
+                        case 7:
+                        {
+                            //registerAccount
+                            if(isUser(user)){
+                                netpack->setCommand("DUPLICATE");
+                                std::string final = netpack->getJSONPackage();
+                                send(sd, final.c_str(), strlen(final.c_str()), 0);
+                            }else{
+                                users->add(user);
+                                netpack->setCommand("ACCEPTED");
+                                std::string final = netpack->getJSONPackage();
+                                std::cout << "sending " << final << std::endl;
+                                send(sd, final.c_str(), strlen(final.c_str()), 0);
                             }
+                        }break;
+                        default:
+                            netpack->setCommand("INVALID");
+                            std::string final = netpack->getJSONPackage();
+                            send(sd, final.c_str(), strlen(final.c_str()), 0);
                             break;
-                        }
                     }
                 }
             }
         }
 
-        return 0;
+        //return -2;
     }
+}
+
+bool Server::isUser(std::string user) {
+    for(int i = 0; i < *users->getLength(); i++){
+        std::string current = users->get(i)->getData();
+        if(user == current){
+            return true;
+        }
+    }
+    return false;
 }

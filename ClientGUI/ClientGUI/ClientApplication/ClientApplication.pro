@@ -26,16 +26,39 @@ CONFIG += c++11
 
 SOURCES += \
         actionswindow.cpp \
+        connector.cpp \
+        genericlinkedlist.cpp \
+        genericnode.cpp \
+        imgtable.cpp \
+        keyvalue.cpp \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        metadb.cpp \
+        netpackage.cpp \
+        registrationscreen.cpp \
+        selectionwindow.cpp \
+        sqlmanagementwindow.cpp
 
 HEADERS += \
         actionswindow.h \
-        mainwindow.h
+        connector.h \
+        genericlinkedlist.h \
+        genericnode.h \
+        imgtable.h \
+        keyvalue.h \
+        mainwindow.h \
+        metadb.h \
+        netpackage.h \
+        registrationscreen.h \
+        selectionwindow.h \
+        sqlmanagementwindow.h
 
 FORMS += \
         actionswindow.ui \
-        mainwindow.ui
+        mainwindow.ui \
+        registrationscreen.ui \
+        selectionwindow.ui \
+        sqlmanagementwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

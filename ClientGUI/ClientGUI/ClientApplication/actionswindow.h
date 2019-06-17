@@ -15,6 +15,9 @@ public:
     explicit ActionsWindow(QWidget *parent = nullptr);
     ~ActionsWindow();
 
+private slots:
+    void on_loadImageButton_clicked();
+
 private:
     Ui::ActionsWindow *ui;
 };

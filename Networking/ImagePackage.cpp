@@ -27,7 +27,7 @@ std::string ImagePackage::getJSONPackage() {
     object.AddMember("from", this->getFrom(), allocator);
     object.AddMember("data", this->getData(), allocator);
     object.AddMember("command", this->getcommand(), allocator);
-    object.AddMember("type", this->type, allocator);
+    //object.AddMember("type", this->type, allocator);
     object.AddMember("metadata", this->getMetadata(), allocator);
     docu.AddMember("NetPackage", object, allocator);
 

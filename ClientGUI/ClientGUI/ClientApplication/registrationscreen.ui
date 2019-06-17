@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ActionsWindow</class>
- <widget class="QMainWindow" name="ActionsWindow">
+ <class>RegistrationScreen</class>
+ <widget class="QMainWindow" name="RegistrationScreen">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -14,72 +14,53 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="imageLabel">
+   <widget class="QLineEdit" name="usernameLineEdit">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>271</width>
-      <height>251</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="imagePathLineEdit">
-    <property name="geometry">
-     <rect>
-      <x>590</x>
-      <y>70</y>
-      <width>171</width>
+      <x>330</x>
+      <y>220</y>
+      <width>142</width>
       <height>25</height>
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="imagePathLabel">
+   <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>40</y>
-      <width>81</width>
-      <height>20</height>
+      <x>360</x>
+      <y>180</y>
+      <width>71</width>
+      <height>17</height>
      </rect>
     </property>
     <property name="text">
-     <string>Image Path</string>
+     <string>Username</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="loadImageButton">
+   <widget class="QLabel" name="statusLabel">
     <property name="geometry">
      <rect>
-      <x>630</x>
-      <y>110</y>
+      <x>360</x>
+      <y>250</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="acceptButton">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>280</y>
       <width>89</width>
       <height>25</height>
      </rect>
     </property>
     <property name="text">
-     <string>Load</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="imageStatusLabel">
-    <property name="geometry">
-     <rect>
-      <x>580</x>
-      <y>140</y>
-      <width>211</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <string>Accept</string>
     </property>
    </widget>
   </widget>

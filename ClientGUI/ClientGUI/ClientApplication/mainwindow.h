@@ -2,7 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "actionswindow.h"
+#include "selectionwindow.h"
+#include "registrationscreen.h"
 
 namespace Ui {
 class MainWindow;
@@ -19,9 +20,13 @@ public:
 private slots:
     void on_pushButton_clicked();
 
+    void on_pushButton_2_clicked();
+
 private:
+    bool checkInfo(std::string user, std::string password);
     Ui::MainWindow *ui;
-    ActionsWindow* actionsWindow;
+    SelectionWindow* selectionWindow;
+    RegistrationScreen* registrationScreen;
 };
 
 #endif // MAINWINDOW_H

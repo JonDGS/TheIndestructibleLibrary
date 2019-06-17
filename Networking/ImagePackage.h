@@ -5,7 +5,6 @@
 #ifndef THEINDESTRUCTIBLELIBRARY_IMAGEPACKAGE_H
 #define THEINDESTRUCTIBLELIBRARY_IMAGEPACKAGE_H
 
-
 #include "Netpackage.h"
 
 class ImagePackage : public NetPackage{
