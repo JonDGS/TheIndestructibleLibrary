@@ -1,6 +1,7 @@
 #include "RAID Manager/FileManager.h"
 #include "RAID Manager/RAIDManager.h"
 #include "Database/MetaController.h"
+#include "Networking/Server.h"
 
 #include <string>
 #include <thread>
@@ -37,6 +38,8 @@ int main() {
     //MetaController mt = MetaController();
     //mt.commit("Test");
     //mt.commit("Jojojo");
+
+    Server::start();
 
     return 0;
 }

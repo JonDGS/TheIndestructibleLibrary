@@ -2,6 +2,8 @@
 #include "string"
 #include <sstream>
 
+#define bufferMultiplier 1
+
 Connector::Connector()
 {
 }
@@ -79,7 +81,7 @@ std::string Connector::get(std::string user, std::string request, std::string da
 
         int connectRes = connect(sock, (sockaddr*)&hint, sizeof(hint));
 
-        char buf[4096];
+        char buf[4096*bufferMultiplier];
         NetPackage netpack = NetPackage();
         netpack.setFrom(user);
         int requestStr = convertCommandToInt(request);
@@ -97,16 +99,12 @@ std::string Connector::get(std::string user, std::string request, std::string da
             std::string bitsName = bitsInfoList->get(0)->getData();
             std::string bitsLen = bitsInfoList->get(1)->getData();
             std::string bits = bitsInfoList->get(2)->getData();
-            std::string bitsDataString = bitsName + ',' + bitsLen;
+            std::string bitsDataString = bitsName + ',' + bitsLen + ',' + bits;
             netpack.setData(bitsDataString);
             netpack.setCommand("uploadImage");
-            std::string bitsDataInfo = netpack.getJSONPackage();
+            std::string bitsDataInfo = netpack.getJSONPackage()  + "\e";
             send(sock, bitsDataInfo.c_str(), strlen(bitsDataInfo.c_str()), 0);
-            int firstResponse = recv(sock, buf, 4096, 0);
-            netpack.setData(bits);
-            std::string bitsString = netpack.getJSONPackage();
-            send(sock, bitsString.c_str(), strlen(bitsString.c_str()), 0);
-            int bytesReceived = recv(sock, buf, 4096, 0);
+            int bytesReceived = recv(sock, buf, 4096*bufferMultiplier, 0);
             std::string preResponse = std::string(buf, bytesReceived);
             rapidjson::Document doc = netpack.convertToRJ_Document(preResponse);
             std::string response = doc["NetPackage"]["command"].GetString();
@@ -118,10 +116,10 @@ std::string Connector::get(std::string user, std::string request, std::string da
             //LogIn
         {
            netpack.setCommand("LogIn");
-           std::string final = netpack.getJSONPackage();
+           std::string final = netpack.getJSONPackage()  + "\e";
            send(sock, final.c_str(), strlen(final.c_str()), 0);
            memset(buf, 0, 4096);
-           int bytesReceived = recv(sock, buf, 4096, 0);
+           int bytesReceived = recv(sock, buf, 4096*bufferMultiplier, 0);
            std::string preResponse = std::string(buf, bytesReceived);
            rapidjson::Document doc = netpack.convertToRJ_Document(preResponse);
            std::string response = doc["NetPackage"]["command"].GetString();
@@ -132,10 +130,10 @@ std::string Connector::get(std::string user, std::string request, std::string da
             //CHECK
         {
             netpack.setCommand("CHECK");
-            std::string final = netpack.getJSONPackage();
+            std::string final = netpack.getJSONPackage()  + "\e";
             send(sock, final.c_str(), strlen(final.c_str()), 0);
             memset(buf, 0, 4096);
-            int bytesReceived = recv(sock, buf, 4096, 0);
+            int bytesReceived = recv(sock, buf, 4096*bufferMultiplier, 0);
             std::string preResponse = std::string(buf, bytesReceived);
             rapidjson::Document doc = netpack.convertToRJ_Document(preResponse);
             std::string response = doc["NetPackage"]["command"].GetString();
@@ -145,10 +143,10 @@ std::string Connector::get(std::string user, std::string request, std::string da
         case 7:
         {
           netpack.setCommand(request);
-          std::string final = netpack.getJSONPackage();
+          std::string final = netpack.getJSONPackage() + "\e";
           send(sock, final.c_str(), strlen(final.c_str()), 0);
           memset(buf, 0, 4096);
-          int bytesReceived = recv(sock, buf, 4096, 0);
+          int bytesReceived = recv(sock, buf, 4096*bufferMultiplier, 0);
           std::string preResponse = std::string(buf, bytesReceived);
           rapidjson::Document doc = netpack.convertToRJ_Document(preResponse);
           std::string response = doc["NetPackage"]["command"].GetString();

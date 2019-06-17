@@ -62,6 +62,12 @@ void ActionsWindow::on_uploadPushButton_clicked()
         std::string bits = bitconverter.convertImageToStringBits(this->currentPath.toStdString());
         std::string bitsInfo = std::to_string(bits.length()) + ',' + attributes[0] + ',' + bits;
         std::string response = Connector::get(user, "uploadImage", bitsInfo);
+        std::cout << response << std::endl;
+        if(response == "RECEIVED"){
+            ui->imageStatusLabel->setText("Image uploaded successfully");
+        }else{
+            ui->imageStatusLabel->setText("Something went wrong try again");
+        }
     }
 
 

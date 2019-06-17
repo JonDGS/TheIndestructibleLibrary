@@ -3,7 +3,10 @@
 //
 
 #include <sstream>
+#include <fcntl.h>
 #include "Server.h"
+
+#define bufferMultiplier 1
 
 #include "Server.h"
 #include "../Structure/GenericLinkedList.h"
@@ -41,7 +44,8 @@ int convertCommandToInt(std::string data) {
         logIn,
         logOut,
         CHECK,
-        registerAccount
+        registerAccount,
+        sqlUpdate,
     };
     if (data == "requestImage") {
         return requestImage;
@@ -66,6 +70,8 @@ int convertCommandToInt(std::string data) {
     }
     if (data == "registerAccount") {
         return registerAccount;
+    }if (data == "sqlUpdate") {
+        return sqlUpdate;
     }
     return -1;
 }
@@ -99,7 +105,7 @@ int Server::start() {
     int max_sd;
     struct sockaddr_in address;
 
-    char buffer[1025];  //data buffer of 1K
+    char buffer[1025*bufferMultiplier];  //data buffer of 1K
 
     //set of socket descriptors
     fd_set readfds;
@@ -209,7 +215,7 @@ int Server::start() {
             if (FD_ISSET(sd, &readfds)) {
                 //Check if it was for closing , and also read the
                 //incoming message
-                if ((valread = read(sd, buffer, 1024)) == 0) {
+                if ((valread = read(sd, buffer, (1025*bufferMultiplier)-1)) == 0) {
                     //Somebody disconnected , get his details and print
                     getpeername(sd, (struct sockaddr *) &address, \
                         (socklen_t *) &addrlen);
@@ -225,6 +231,25 @@ int Server::start() {
                 else {
                     std::string json = std::string(buffer, valread);
 
+                    bool found = false;
+
+                    std::string delimeter = "\e";
+                    if(json.find(delimeter) == std::string::npos) {
+                        while (!found) {
+                            std::cout << "in" << std::endl;
+                            fcntl(sd, F_SETFL, fcntl(sd, F_GETFL) | O_NONBLOCK);
+                            int bytesLeft = recv(sd, buffer, 1025, 0);
+                            std::string left = std::string(buffer, bytesLeft);
+                            json += left;
+                            if (left.find('/e') != std::string::npos) {
+                                json = json.substr(0, json.length() - 1);
+                                found = true;
+                            }
+                        }
+                    }else{
+                        json = json.substr(0, json.find(delimeter));
+                    }
+
                     rapidjson::Document doc = NetPackage::convertToRJ_Document(json);
 
                     std::string command = doc["NetPackage"]["command"].GetString();
@@ -238,6 +263,9 @@ int Server::start() {
                     switch (commandInt) {
                         case 0: {
                             //requesting image
+                            std::string name = doc["NetPackage"]["data"].GetString();
+                            std::string bits = raidManager->getFile(name);
+
                         }break;
                         case 1:
                         {
@@ -246,16 +274,10 @@ int Server::start() {
                             GenericLinkedList<std::string>* bitsInfoList = convertStringToLL(bitsInfoString, ',');
                             std::string bitsLen = bitsInfoList->get(0)->getData();
                             std::string bitsName = bitsInfoList->get(1)->getData();
-                            int bitsLength = std::stoi(bitsLen);
-                            char bigBuffer[bitsLength];
-                            netpack->setCommand("RECEIVED");
-                            std::string final = netpack->getJSONPackage();
-                            send(sd, final.c_str(), strlen(final.c_str()), 0);
-                            int bitsReceived = recv(sd, bigBuffer, bitsLength, 0);
-                            std::string bits = std::string(bigBuffer, bitsLength);
+                            std::string bits = bitsInfoList->get(2)->getData();
                             raidManager->saveFile(bitsName, bits);
                             netpack->setCommand("RECEIVED");
-                            final = netpack->getJSONPackage();
+                            std::string final = netpack->getJSONPackage();
                             send(sd, final.c_str(), strlen(final.c_str()), 0);
                         }break;
                         case 2:
@@ -275,7 +297,6 @@ int Server::start() {
                             //deleteImage
                             std::string name = doc["NetPackage"]["data"].GetString();
                             raidManager->deleteFile(name);
-
 
                         }break;
                         case 4:
@@ -322,6 +343,11 @@ int Server::start() {
                                 std::cout << "sending " << final << std::endl;
                                 send(sd, final.c_str(), strlen(final.c_str()), 0);
                             }
+                        }break;
+                        case 8:
+                        {
+                            //sqlUpdate
+
                         }break;
                         default:
                             netpack->setCommand("INVALID");
