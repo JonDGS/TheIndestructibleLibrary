@@ -141,7 +141,7 @@
     <property name="geometry">
      <rect>
       <x>626</x>
-      <y>240</y>
+      <y>330</y>
       <width>121</width>
       <height>20</height>
      </rect>
@@ -160,7 +160,7 @@
     <property name="geometry">
      <rect>
       <x>620</x>
-      <y>260</y>
+      <y>350</y>
       <width>131</width>
       <height>91</height>
      </rect>
@@ -170,13 +170,62 @@
     <property name="geometry">
      <rect>
       <x>640</x>
-      <y>360</y>
+      <y>450</y>
       <width>89</width>
       <height>25</height>
      </rect>
     </property>
     <property name="text">
      <string>Upload</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pullPushButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>510</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pull</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="pullLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>510</y>
+      <width>113</width>
+      <height>25</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="galleryLabel">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>250</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Gallery</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="galleryLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>280</y>
+      <width>113</width>
+      <height>25</height>
+     </rect>
     </property>
    </widget>
   </widget>

@@ -1,4 +1,9 @@
-#include "connector.h"
+//
+// Created by jondorito on 17/06/19.
+//
+
+#include "Connector.h"
+
 #include "string"
 #include <sstream>
 #include <fcntl.h>
@@ -42,7 +47,7 @@ int convertCommandToInt(std::string data) {
         sqlUpdate
     };
     if (data == "requestImage") {
-            return requestImage;
+        return requestImage;
     }
     if (data == "uploadImage") {
         return uploadImage;
@@ -53,18 +58,6 @@ int convertCommandToInt(std::string data) {
     if (data == "deleteImage") {
         return deleteImage;
     }
-    if (data == "logIn") {
-        return logIn;
-    }
-    if (data == "logOut") {
-        return logOut;
-    }
-    if (data == "CHECK") {
-        return CHECK;
-    }
-    if (data == "registerAccount") {
-        return registerAccount;
-    }
     if (data == "sqlUpdate") {
         return sqlUpdate;
     }
@@ -72,26 +65,33 @@ int convertCommandToInt(std::string data) {
 }
 
 std::string Connector::get(std::string user, std::string request, std::string data){
-        int sock = socket(AF_INET, SOCK_STREAM, 0);
-        if (sock == -1)
-        {
-        }
-        int port = 8888;
-        std::string ipAddress = "127.0.0.1";
+    int sock = socket(AF_INET, SOCK_STREAM, 0);
+    int requestStr = convertCommandToInt(request);
+    if (sock == -1)
+    {
+    }
+    int port;
 
-        sockaddr_in hint;
-        hint.sin_family = AF_INET;
-        hint.sin_port = htons(port);
-        inet_pton(AF_INET, ipAddress.c_str(), &hint.sin_addr);
+    std::string ipAddress = "127.0.0.1";
 
-        int connectRes = connect(sock, (sockaddr*)&hint, sizeof(hint));
+    if((requestStr == 0) || (requestStr == 1) || (requestStr == 3)){
+        port = 7777;
+    }else{
+        port = 9999;
+    }
 
-        char buf[4096*bufferMultiplier];
-        NetPackage netpack = NetPackage();
-        netpack.setFrom(user);
-        int requestStr = convertCommandToInt(request);
-        std::cout << requestStr << std::endl;
-        switch(requestStr){
+    sockaddr_in hint;
+    hint.sin_family = AF_INET;
+    hint.sin_port = htons(port);
+    inet_pton(AF_INET, ipAddress.c_str(), &hint.sin_addr);
+
+    int connectRes = connect(sock, (sockaddr*)&hint, sizeof(hint));
+
+    char buf[4096*bufferMultiplier];
+    NetPackage netpack = NetPackage();
+    netpack.setFrom(user);
+    std::cout << requestStr << std::endl;
+    switch(requestStr){
         case 0:
         {
             //Request Image
@@ -142,55 +142,12 @@ std::string Connector::get(std::string user, std::string request, std::string da
             std::string response = doc["NetPackage"]["command"].GetString();
             close(sock);
             return response;
-        }
-            break;
-        case 4:
-            //LogIn
-        {
-           netpack.setCommand("LogIn");
-           std::string final = netpack.getJSONPackage()  + "\e";
-           send(sock, final.c_str(), strlen(final.c_str()), 0);
-           memset(buf, 0, 4096);
-           int bytesReceived = recv(sock, buf, 4096*bufferMultiplier, 0);
-           std::string preResponse = std::string(buf, bytesReceived);
-           rapidjson::Document doc = netpack.convertToRJ_Document(preResponse);
-           std::string response = doc["NetPackage"]["command"].GetString();
-           close(sock);
-           return response;
-        }break;
-        case 6:
-            //CHECK
-        {
-            netpack.setCommand("CHECK");
-            std::string final = netpack.getJSONPackage()  + "\e";
-            send(sock, final.c_str(), strlen(final.c_str()), 0);
-            memset(buf, 0, 4096);
-            int bytesReceived = recv(sock, buf, 4096*bufferMultiplier, 0);
-            std::string preResponse = std::string(buf, bytesReceived);
-            rapidjson::Document doc = netpack.convertToRJ_Document(preResponse);
-            std::string response = doc["NetPackage"]["command"].GetString();
-            close(sock);
-            return response;
-        }break;
-        case 7:
-        {
-          netpack.setCommand(request);
-          std::string final = netpack.getJSONPackage() + "\e";
-          send(sock, final.c_str(), strlen(final.c_str()), 0);
-          memset(buf, 0, 4096);
-          int bytesReceived = recv(sock, buf, 4096*bufferMultiplier, 0);
-          std::string preResponse = std::string(buf, bytesReceived);
-          rapidjson::Document doc = netpack.convertToRJ_Document(preResponse);
-          std::string response = doc["NetPackage"]["command"].GetString();
-          close(sock);
-          return response;
         }break;
         case 8:
         {
             //sqlUpdate
-            netpack.setCommand("sqlUpdate");
             if(data == "ROLLBACK"){
-                netpack.setData("ROLLBACK");
+                netpack.setCommand("ROLLBACK");
                 std::string final = netpack.getJSONPackage() + "\e";
                 send(sock, final.c_str(), strlen(final.c_str()), 0);
                 memset(buf, 0, 4096);
@@ -216,7 +173,7 @@ std::string Connector::get(std::string user, std::string request, std::string da
                 close(sock);
                 return json;
             }else if(data == "getDatabase"){
-                netpack.setData("getDatabase");
+                netpack.setCommand("getDatabase");
                 std::string message = netpack.getJSONPackage() + "\e";
                 send(sock, message.c_str(), strlen(message.c_str()), 0);
                 int bytesReceived = recv(sock, buf, 4096*bufferMultiplier, 0);
@@ -241,23 +198,21 @@ std::string Connector::get(std::string user, std::string request, std::string da
                 close(sock);
                 return json;
             }else{
-                netpack.setCommand("sqlUpdate");
+                netpack.setCommand("setDatabase");
                 netpack.setData(data);
                 std::string final = netpack.getJSONPackage() + "\e";
                 send(sock, final.c_str(), strlen(final.c_str()), 0);
                 memset(buf, 0, 4096);
                 int bytesReceived = recv(sock, buf, 4096*bufferMultiplier, 0);
                 std::string preResponse = std::string(buf, bytesReceived);
-                rapidjson::Document doc = netpack.convertToRJ_Document(preResponse);
-                std::string response = "UPDATED";
                 close(sock);
-                return response;
+                return preResponse;
             }
         }break;
         default:
             close(sock);
             break;
-        }
+    }
 
-        //close(sock);
+    //close(sock);
 }

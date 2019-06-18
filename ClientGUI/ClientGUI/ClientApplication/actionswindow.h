@@ -5,6 +5,8 @@
 #include <QFileDialog>
 #include "bitconverter.h"
 #include "connector.h"
+#include "metadb.h"
+#include "imgtable.h"
 
 namespace Ui {
 class ActionsWindow;
@@ -25,11 +27,14 @@ private slots:
 
     void on_uploadPushButton_clicked();
 
+    void on_pullPushButton_clicked();
+
 private:
     Ui::ActionsWindow *ui;
     QString currentPath;
     bool isImageLoaded = false;
     std::string user;
+    MetaDB metaDatabase;
 };
 
 #endif // ACTIONSWINDOW_H

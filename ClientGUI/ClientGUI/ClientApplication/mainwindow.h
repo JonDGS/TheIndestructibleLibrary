@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "selectionwindow.h"
 #include "registrationscreen.h"
+#include <QCloseEvent>
+#include "connector.h"
 
 namespace Ui {
 class MainWindow;

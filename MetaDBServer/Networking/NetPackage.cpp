@@ -1,9 +1,11 @@
-#include "netpackage.h"
-#include <iostream>
+//
+// Created by jondorito on 17/06/19.
+//
 
-/**
- * @brief NetPackage Default constructor.
- */
+#include "NetPackage.h"
+
+#define RAPIDJSON_HAS_STDSTRING  1
+
 NetPackage::NetPackage() {
 }
 
@@ -84,13 +86,16 @@ void NetPackage::setCommand(std::string command) {
     this->command = command;
 }
 
-/**
- * @brief convertToRJ_Document Converts JString to a Rapid JSON Document.
- * @return A Rapid JSON version of the string.
- */
 rapidjson::Document NetPackage::convertToRJ_Document(std::string json){
     rapidjson::Document doc;
-    //std::cout << "Parsing ... " << json << std::endl;
-    doc.Parse(json);
+    doc.Parse(json.c_str());
     return doc;
+}
+
+std::string NetPackage::getType() {
+    return this->type;
+}
+
+void NetPackage::setType(std::string type) {
+    this->type = type;
 }

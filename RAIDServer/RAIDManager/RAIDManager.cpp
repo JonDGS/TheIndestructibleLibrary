@@ -1,5 +1,5 @@
 //
-// Created by alvar on 02/06/19.
+// Created by jondorito on 17/06/19.
 //
 
 #include "RAIDManager.h"
@@ -8,7 +8,7 @@
  * Main constructor or the class, assign and initializes al the needed members of the class
  */
 RAIDManager::RAIDManager() {
-    this->RAID5 = "../RAID Manager/RAID5";
+    this->RAID5 = "../RAIDManager/RAID5";
 
     this->disk_A = this->RAID5 + "/Disk_A";
     this->disk_B = this->RAID5 + "/Disk_B";
@@ -434,10 +434,10 @@ void RAIDManager::saveIDs() {
  * of the IDs stored on the backup file
  */
 void RAIDManager::checkIDs() {
-    if (this->file_Manager.readRile("IDs",this->RAID5).length() == 0)
+    if (this->file_Manager.readRile("IDs", this->RAID5).length() == 0)
         return;
 
-    std::string backup = this->file_Manager.readRile("IDs",this->RAID5);
+    std::string backup = this->file_Manager.readRile("IDs", this->RAID5);
 
     std::string ID;
 
