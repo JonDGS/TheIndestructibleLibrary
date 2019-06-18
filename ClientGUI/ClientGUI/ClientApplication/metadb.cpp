@@ -27,12 +27,40 @@ void MetaDB::print() {
     cout <<"-----------------------------" <<endl<<endl;
 }
 
+GenericLinkedList<string> MetaDB::getPrintable()
+{
+    GenericLinkedList<string> list;
+    list.add("");
+    list.add("___Current database___");
+    for(int i=0;i<*db->getLength();i++) {
+        ImgTable img = db->get(i)->getData();
+
+        string name = img.getAttribute("name");
+        string gallery = img.getAttribute("gallery");
+        string author = img.getAttribute("author");
+        string year = img.getAttribute("year");
+        string size = img.getAttribute("size");
+        string description = img.getAttribute("description");
+
+        list.add(gallery+":"+name);
+        if(author!="") list.add(name+".author = "+author);
+        if(year!="")list.add(name+".year = "+year);
+        if(size!="")list.add(name+".size = "+size);
+        if(description!="")list.add(name+".description = "+description);
+        list.add("");
+    }
+    list.add("");
+
+    return list;
+}
+
 void MetaDB::insert(ImgTable img) {
     this->db->add(img);
 }
 
 void MetaDB::setJSONDatabase(string str) {
     GenericLinkedList<ImgTable> *newDB = new GenericLinkedList<ImgTable>();
+    this->toDelete= new GenericLinkedList<string>();
 
     str.erase(0,13);
     str.erase(str.size()-2,str.size());

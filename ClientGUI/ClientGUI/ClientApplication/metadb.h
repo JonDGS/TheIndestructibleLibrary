@@ -47,7 +47,7 @@ public:
      * @param condition Condition specified
      * @return A linked list that contains the requested info
      */
-    GenericLinkedList<string> select(string gallery,GenericLinkedList<string> attributes, KeyValue condition);
+    GenericLinkedList<string> select(string gallery, GenericLinkedList<string> attributes, KeyValue condition);
 
     /**
      * Updates the information specified of a given gallery under a given condition in the database
@@ -74,6 +74,12 @@ public:
      * Prints the database info in console
      */
     void print();
+
+    /**
+     * @brief getPrintable Returns the database in linked list form
+     * @return Database in linked list form
+     */
+    GenericLinkedList<string> getPrintable();
 
     /**
      * Returns the names of the images whose metadata was deleted
