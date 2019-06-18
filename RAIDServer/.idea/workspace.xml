@@ -12,54 +12,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="935ff731-45df-468a-aefe-aea3fa3aa7d2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../MetaDBServer/.idea/MetaDBServer.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MetaDBServer/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MetaDBServer/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MetaDBServer/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MetaDBServer/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MetaDBServer/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MetaDBServer/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MetaDBServer/Database/KeyValue.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MetaDBServer/Database/KeyValue.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MetaDBServer/Database/MetaController.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MetaDBServer/Database/MetaController.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MetaDBServer/Networking/NetPackage.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MetaDBServer/Networking/NetPackage.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MetaDBServer/Networking/Server.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MetaDBServer/Networking/Server.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MetaDBServer/main.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Networking/Connector.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Networking/Connector.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/RAIDServer.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Networking/NetPackage.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Networking/NetPackage.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Networking/Server.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Networking/Server.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RAIDManager/FileManager.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RAIDManager/FileManager.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RAIDManager/RAIDManager.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RAIDManager/RAIDManager.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Structure/GenericLinkedList.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Structure/GenericNode.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/actionswindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/actionswindow.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/actionswindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/actionswindow.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/actionswindow.ui" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/actionswindow.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/connector.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/connector.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/mainwindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/mainwindow.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/netpackage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/netpackage.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Networking/Server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Networking/Server.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Networking/Server.h" beforeDir="false" afterPath="$PROJECT_DIR$/../Networking/Server.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RAID Manager/RAID5/IDs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../RAID Manager/RAID5/IDs.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RAID Manager/RAIDManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../RAID Manager/RAIDManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Structure/GenericLinkedList.h" beforeDir="false" afterPath="$PROJECT_DIR$/../Structure/GenericLinkedList.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/selectionwindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/selectionwindow.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/sqlmanagementwindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/sqlmanagementwindow.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/sqlmanagementwindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/sqlmanagementwindow.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MetaDBServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MetaDBServer/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MetaDBServer/Networking/Server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../MetaDBServer/Networking/Server.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -110,7 +69,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RAIDManager/RAIDManager.h">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="899">
@@ -119,11 +78,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Networking/Server.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="509">
-              <caret line="282" column="1" selection-start-line="4" selection-end-line="282" selection-end-column="1" />
+            <state relative-caret-position="494">
+              <caret line="260" column="32" lean-forward="true" selection-start-line="260" selection-start-column="32" selection-end-line="260" selection-end-column="32" />
               <folding>
                 <element signature="e#44#62#0" expanded="true" />
                 <element signature="e#131#150#0" expanded="true" />
@@ -271,12 +230,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1560800681308</updated>
-      <workItem from="1560800684331" duration="13543000" />
+      <workItem from="1560800684331" duration="14994000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13543000" />
+    <option name="totallyTimeSpent" value="14994000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1920" height="1055" extended-state="6" />
@@ -395,21 +354,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Networking/Server.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="509">
-          <caret line="282" column="1" selection-start-line="4" selection-end-line="282" selection-end-column="1" />
-          <folding>
-            <element signature="e#44#62#0" expanded="true" />
-            <element signature="e#131#150#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/RAIDManager/RAIDManager.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="899">
           <caret line="136" column="26" selection-start-line="136" selection-start-column="26" selection-end-line="136" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Networking/Server.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="260" column="32" lean-forward="true" selection-start-line="260" selection-start-column="32" selection-end-line="260" selection-end-column="32" />
+          <folding>
+            <element signature="e#44#62#0" expanded="true" />
+            <element signature="e#131#150#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

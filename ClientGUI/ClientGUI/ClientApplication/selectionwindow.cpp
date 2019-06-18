@@ -30,5 +30,6 @@ void SelectionWindow::on_managePushButton_clicked()
 {
     this->sqlManagementWindow = new SQLManagementWindow;
     this->hide();
+    this->sqlManagementWindow->setUser(user);
     this->sqlManagementWindow->show();
 }
