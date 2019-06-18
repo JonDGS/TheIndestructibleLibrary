@@ -243,6 +243,7 @@ int Server::start() {
                         case setDatabase:
                         {
                             std::string update = doc["NetPackage"]["data"].GetString();
+                            std::cout << update << std::endl;
                             metaController->commit(update);
                             netpack->setCommand("UPDATED");
                             std::string final = netpack->getJSONPackage() + "\e";

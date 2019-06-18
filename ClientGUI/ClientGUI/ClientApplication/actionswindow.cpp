@@ -39,6 +39,7 @@ void ActionsWindow::on_uploadPushButton_clicked()
 {
     std::string currentDatabase = Connector::get(user, "sqlUpdate", "getDatabase");
     std::cout << currentDatabase << std::endl;
+    metaDatabase.setJSONDatabase(currentDatabase);
     std::string attributes[6];
     bool allGood = true;
     if(ui->nameLineEdit->text().isEmpty()){
@@ -65,20 +66,19 @@ void ActionsWindow::on_uploadPushButton_clicked()
 
     if(allGood){
         std::string format = this->currentPath.toStdString().substr(this->currentPath.toStdString().length()-4, 4);
-        std::string header;
-        if(format.find("jpg") != std::string::npos){
+        //std::string header;
+        /*if(format.find("jpg") != std::string::npos){
             header = "00";
         }if(format.find("jpeg") != std::string::npos){
             header = "01";
         }if(format.find("png") != std::string::npos){
             header = "11";
-        }
-        std::cout << "Sending an image in " << header << std::endl;
+        }*/
         attributes[3] = std::to_string(QFile(QString(this->currentPath)).size());
         ImgTable table = ImgTable(attributes[0], attributes[5], attributes[1], attributes[2], attributes[3], attributes[4]);
         metaDatabase.insert(table);
         BitConverter bitconverter;
-        std::string bits = header + bitconverter.convertImageToStringBits(this->currentPath.toStdString());
+        std::string bits = bitconverter.convertImageToStringBits(this->currentPath.toStdString());
         std::string bitsInfo = std::to_string(bits.length()) + ',' + attributes[0] + ',' + bits;
         std::string response = Connector::get(user, "uploadImage", bitsInfo);
         std::string database = metaDatabase.toJSON();
@@ -102,17 +102,16 @@ void ActionsWindow::on_pullPushButton_clicked()
         if(!bits.empty()){
         BitConverter* bitconverter;
         std::string header = bits.substr(0, 2);
-        std::cout << header << std::endl;
+        /*std::cout << header << std::endl;
         if(header.find("00") != std::string::npos){
             header = ".jpg";
         }if(header.find("01") != std::string::npos){
             header = ".jpeg";
         }if(header.find("11") != std::string::npos){
             header = ".png";
-        }
-        bits = bits.erase(0, 2);
-        bitconverter->convertStringToImage(bits, "../ClientApplication/cache/" + name + header);
-        ui->imageLabel->setPixmap("../ClientApplication/cache/" + QString::fromStdString(name) + QString::fromStdString(header));
+        }*/
+        bitconverter->convertStringToImage(bits, "../ClientApplication/cache/" + name + ".jpg");
+        ui->imageLabel->setPixmap("../ClientApplication/cache/" + QString::fromStdString(name) + ".jpg");
         ui->imageLabel->setScaledContents(true);
         ui->imageStatusLabel->setText("Image found");
         }else{

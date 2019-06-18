@@ -1,6 +1,7 @@
 #include "sqlmanagementwindow.h"
 #include "ui_sqlmanagementwindow.h"
 #include "metadb.h"
+#include "connector.h"
 
 SQLManagementWindow::SQLManagementWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -9,23 +10,13 @@ SQLManagementWindow::SQLManagementWindow(QWidget *parent) :
     ui->setupUi(this);
     setWindowTitle("IDE");
 
-    this->db = new MetaDB();
-        ImgTable img1 = ImgTable("Puddle","Dogs","Ruben","1688","87kb","A random dogo");
-        db->insert(img1);
-        ImgTable img2 = ImgTable("Chibba","Dogs");
-        img2.setYear("2000");
-        img2.setDescription("Chibbing being funny");
-        db->insert(img2);
-        ImgTable img3 = ImgTable("Grumpy","Dogs");
-        img3.setYear("2000");
-        img3.setAuthor("Sebastian");
-        img3.setDescription("A grumpy foe");
-        db->insert(img3);
-        ImgTable img4 = ImgTable("Michi","Cats");
-        img4.setYear("2002");
-        img4.setAuthor("Sebastian");
-        db->insert(img4);
+    db = new MetaDB();
 
+    std::string database = Connector::get(user, "sqlUpdate", "getDatabase");
+
+    std::cout << database << std::endl;
+
+    this->db->setJSONDatabase(database);
     displayList(db->getPrintable());
 }
 
@@ -278,15 +269,39 @@ void SQLManagementWindow::on_runButton_clicked()
 
 void SQLManagementWindow::on_commitButton_clicked()
 {
-
+    std::cout << "Entro" << std::endl;
+    std::string database = this->db->toJSON();
+    std::string response = Connector::get(user, "sqlUpdate", database);
+    GenericLinkedList<std::string> imagesToBeDelete = this->db->getToDelete();
+    for(int i = 0; i < *imagesToBeDelete.getLength(); i++){
+        Connector::get(user, "deleteImage", imagesToBeDelete.get(i)->getData());
+    }
 }
 
 void SQLManagementWindow::on_rollbackButton_clicked()
 {
-
+    std::string updated = Connector::get(user, "sqlUpdate", "ROLLBACK");
+    this->db->setJSONDatabase(updated);
 }
 
 void SQLManagementWindow::on_pushButton_3_clicked()
 {
     ui->codePlainTextEdit->clear();
+}
+
+void SQLManagementWindow::on_pushButton_clicked()
+{
+    std::cout << "Entro" << std::endl;
+    std::string database = this->db->toJSON();
+    std::string response = Connector::get(user, "sqlUpdate", database);
+    GenericLinkedList<std::string> imagesToBeDelete = this->db->getToDelete();
+    for(int i = 0; i < *imagesToBeDelete.getLength(); i++){
+        Connector::get(user, "deleteImage", imagesToBeDelete.get(i)->getData());
+    }
+}
+
+void SQLManagementWindow::on_pushButton_2_clicked()
+{
+    std::string updated = Connector::get(user, "sqlUpdate", "ROLLBACK");
+    this->db->setJSONDatabase(updated);
 }
