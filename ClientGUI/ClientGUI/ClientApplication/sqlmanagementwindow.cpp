@@ -121,6 +121,14 @@ GenericLinkedList<std::string> SQLManagementWindow::runQueries(GenericLinkedList
                     if(ch==',')n++;
                 }
 
+                if(strAttributes=="*"){
+                    attributes.add("name");
+                    attributes.add("author");
+                    attributes.add("size");
+                    attributes.add("description");
+                    attributes.add("year");
+                }
+
                 string temp;
                 for(int i=0;i<n;i++){
                     temp = strAttributes.substr(0, strAttributes.find(","));
