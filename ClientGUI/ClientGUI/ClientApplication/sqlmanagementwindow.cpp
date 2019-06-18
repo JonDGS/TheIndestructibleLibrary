@@ -268,7 +268,10 @@ void SQLManagementWindow::on_runButton_clicked()
         displayList(db->getPrintable());
     }else if(first == "SAMPLES"){
         GenericLinkedList<string> sample;
-        sample.add("INSERT INTO Landscapes (name, gallery, author, year, size, description) VALUES ('Tree', 'Boznack', '1750', '90kb', 'A simple computer image')");
+        sample.add("INSERT INTO Dogs (name, author, year, size, description) VALUES ('Bulldog', 'John', '2016', '200kb', 'A black dog')");
+        sample.add("SELECT year, description FROM Dogs WHERE year BETWEEN 1999 AND 20019");
+        sample.add("UPDATE Cats SET year=2005 WHERE year > 2000");
+        sample.add("DELETE FROM Dogs WHERE year IS 2000");
 
     }else{
         displayList(runQueries(lines));
