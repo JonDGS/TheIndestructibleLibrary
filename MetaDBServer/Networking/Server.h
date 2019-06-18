@@ -1,9 +1,9 @@
 //
-// Created by jondorito on 05/06/19.
+// Created by jondorito on 17/06/19.
 //
 
-#ifndef THEINDESTRUCTIBLELIBRARY_SERVER_H
-#define THEINDESTRUCTIBLELIBRARY_SERVER_H
+#ifndef METADBSERVER_SERVER_H
+#define METADBSERVER_SERVER_H
 
 
 #include <stdio.h>
@@ -17,15 +17,19 @@
 #include <netinet/in.h>
 #include <sys/time.h> //FD_SET, FD_ISSET, FD_ZERO macros
 #include <iostream>
-#include "Netpackage.h"
-#include "../Structure/GenericLinkedList.h"
-#include "../RAID Manager/RAIDManager.h"
+#include "NetPackage.h"
+#include "../../Structure/GenericLinkedList.h"
 #include "../Database/MetaController.h"
-#include "Connector.h"
 
 #define TRUE   1
 #define FALSE  0
-#define PORT 8888
+#define PORT 9999
+
+enum cases{
+    ROLLBACK = 0,
+    getDatabase,
+    setDatabase
+};
 
 class Server{
 public:
@@ -36,8 +40,7 @@ public:
 private:
     inline static GenericLinkedList<std::string>* currentUsers;
     inline static GenericLinkedList<std::string>* users;
-    inline static RAIDManager* raidManager;
     inline static MetaController* metaController;
 };
 
-#endif //THEINDESTRUCTIBLELIBRARY_SERVER_H
+#endif //METADBSERVER_SERVER_H

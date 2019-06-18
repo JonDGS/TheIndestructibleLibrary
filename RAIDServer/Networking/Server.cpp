@@ -1,5 +1,5 @@
 //
-// Created by jondorito on 05/06/19.
+// Created by jondorito on 17/06/19.
 //
 
 #include <sstream>
@@ -35,43 +35,13 @@ std::string convertStringToSubstr(std::string data, char limit) {
     return list;
 }
 
-int convertCommandToInteger(std::string data) {
-    enum commands {
-        requestImage = 0,
-        uploadImage,
-        uploadMetadata,
-        deleteImage,
-        logIn,
-        logOut,
-        CHECK,
-        registerAccount,
-        sqlUpdate,
-    };
-    if (data == "requestImage") {
-        return requestImage;
-    }
+int convertCommandToInt(std::string data) {
     if (data == "uploadImage") {
         return uploadImage;
-    }
-    if (data == "uploadMetadata") {
-        return uploadMetadata;
-    }
-    if (data == "deleteImage") {
-        return deleteImage;
-    }
-    if (data == "logIn") {
-        return logIn;
-    }
-    if (data == "logOut") {
-        return logOut;
-    }
-    if (data == "CHECK") {
-        return CHECK;
-    }
-    if (data == "registerAccount") {
-        return registerAccount;
-    }if (data == "sqlUpdate") {
-        return sqlUpdate;
+    }if (data == "requestImage") {
+        return requestImage;
+    }if (data == "deleteFile") {
+        return deleteFile;
     }
     return -1;
 }
@@ -256,106 +226,37 @@ int Server::start() {
 
                     std::string user = doc["NetPackage"]["from"].GetString();
                     std::cout << command << std::endl;
-                    int commandInt = convertCommandToInteger(command);
+                    int commandInt = convertCommandToInt(command);
                     std::cout << commandInt << std::endl;
                     NetPackage *netpack = new NetPackage();
                     netpack->setFrom("Server");
                     switch (commandInt) {
-                        case 0: {
-                            //requesting image
+                        case uploadImage:
+                        {
+                            std::string bitsInfo = doc["NetPackage"]["data"].GetString();
+                            GenericLinkedList<std::string>* bitsInfoList = convertStringToLL(bitsInfo, ',');
+                            std::string bitsName = bitsInfoList->get(1)->getData();
+                            std::string bits = bitsInfoList->get(2)->getData();
+                            raidManager->saveFile(bitsName, bits);
+                            netpack->setCommand("SAVED");
+                            std::string final = netpack->getJSONPackage();
+                            send(sd, final.c_str(), strlen(final.c_str()), 0);
+                        }break;
+                        case requestImage:
+                        {
                             std::string name = doc["NetPackage"]["data"].GetString();
-                            std::string response = Connector::get(user, command, name);
-                            netpack->setData(response);
-                            std::string final = netpack->getJSONPackage() + "\e";
+                            std::string bits = raidManager->getFile(name);
+                            netpack->setData(bits);
+                            std::string final = netpack->getJSONPackage()  + "\e";
                             send(sd, final.c_str(), strlen(final.c_str()), 0);
                         }break;
-                        case 1:
+                        case deleteFile:
                         {
-                            //uploadImage
-                            std::string bitsInfoString = doc["NetPackage"]["data"].GetString();
-                            std::string response = Connector::get(user, command, bitsInfoString);
-                            netpack->setCommand(response);
-                            std::string final = netpack->getJSONPackage();
-                            send(sd, final.c_str(), strlen(final.c_str()), 0);
-                        }break;
-                        case 2:
-                        {
-                            //uploadMetadata
-                            std::string metaDataString = doc["NetPackage"]["data"].GetString();
-                            GenericLinkedList<std::string>* metadataList = convertStringToLL(metaDataString, ',');
-                            netpack->setCommand("RECEIVED");
-                            std::string final = netpack->getJSONPackage();
-                            send(sd, final.c_str(), strlen(final.c_str()), 0);
-                        }break;
-                        case 3:
-                        {
-                            //deleteImage
                             std::string name = doc["NetPackage"]["data"].GetString();
                             raidManager->deleteFile(name);
-
-                        }break;
-                        case 4:
-                        {
-                            //logIn
-                            currentUsers->add(user);
-                            std::cout << "User " << user << " has logged in" << std::endl;
-                            netpack->setCommand("LOGGED_IN");
-                            std::string final = netpack->getJSONPackage();
+                            netpack->setData("DELETED");
+                            std::string final = netpack->getJSONPackage()  + "\e";
                             send(sd, final.c_str(), strlen(final.c_str()), 0);
-                        }break;
-                        case 5:
-                        {
-                            //LogOut
-                            closeSession(user);
-                            netpack->setCommand("LOGGED_OUT");
-                            std::string final = netpack->getJSONPackage();
-                            send(sd, final.c_str(), strlen(final.c_str()), 0);
-                        }break;
-                        case 6:
-                        {
-                            //Check credentials
-                            if(isUser(user)){
-                                netpack->setCommand("CHECKED");
-                                std::string final = netpack->getJSONPackage();
-                                send(sd, final.c_str(), strlen(final.c_str()), 0);
-                            }else{
-                                netpack->setCommand("INVALID");
-                                std::string final = netpack->getJSONPackage();
-                                send(sd, final.c_str(), strlen(final.c_str()), 0);
-                            }
-                        }break;
-                        case 7:
-                        {
-                            //registerAccount
-                            if(isUser(user)){
-                                netpack->setCommand("DUPLICATE");
-                                std::string final = netpack->getJSONPackage();
-                                send(sd, final.c_str(), strlen(final.c_str()), 0);
-                            }else{
-                                users->add(user);
-                                netpack->setCommand("ACCEPTED");
-                                std::string final = netpack->getJSONPackage();
-                                std::cout << "sending " << final << std::endl;
-                                send(sd, final.c_str(), strlen(final.c_str()), 0);
-                            }
-                        }break;
-                        case 8:
-                        {
-                            //sqlUpdate
-                            std::string data = doc["NetPackage"]["data"].GetString();
-                            if(data == "ROLLBACK"){
-                                std::string response = Connector::get(user, "sqlUpdate", data);
-                                std::string final = response + "\e";
-                                send(sd, final.c_str(), strlen(final.c_str()), 0);
-                            }else if(data == "getDatabase"){
-                                std::string response = Connector::get(user, "sqlUpdate", data);
-                                std::string final = response + "\e";
-                                send(sd, final.c_str(), strlen(final.c_str()), 0);
-                            }else{
-                                std::string final = Connector::get(user, "sqlUpdate", data);
-                                send(sd, final.c_str(), strlen(final.c_str()), 0);
-                            }
-
                         }break;
                         default:
                             netpack->setCommand("INVALID");
@@ -380,3 +281,4 @@ bool Server::isUser(std::string user) {
     }
     return false;
 }
+
