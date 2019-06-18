@@ -11,6 +11,12 @@
 #include "Server.h"
 #include "../Structure/GenericLinkedList.h"
 
+/**
+ * Converts a String to multiple substr
+ * @param data
+ * @param limit
+ * @return LinkedList string
+ */
 GenericLinkedList<std::string> *convertStringToLL(std::string data, char limit) {
     std::stringstream ss(data);
     GenericLinkedList<std::string> *list = new GenericLinkedList<std::string>;
@@ -23,6 +29,12 @@ GenericLinkedList<std::string> *convertStringToLL(std::string data, char limit) 
     return list;
 }
 
+/**
+ * Converts string to substr parsed by commas
+ * @param data
+ * @param limit
+ * @return std::string
+ */
 std::string convertStringToSubstr(std::string data, char limit) {
     std::stringstream ss(data);
     std::string list = "";
@@ -35,6 +47,11 @@ std::string convertStringToSubstr(std::string data, char limit) {
     return list;
 }
 
+/**
+ * Converts Strings to an Integer so it can be used with switch cases
+ * @param string to be converted
+ * @return integer related to the string
+ */
 int convertCommandToInteger(std::string data) {
     enum commands {
         requestImage = 0,
@@ -76,6 +93,10 @@ int convertCommandToInteger(std::string data) {
     return -1;
 }
 
+/**
+     * Closes the sessions for an specific user
+     * @param user
+     */
 void Server::closeSession(std::string user) {
     for(int i = 0; i < *currentUsers->getLength(); i++){
         std::string current = currentUsers->get(i)->getData();
@@ -83,6 +104,11 @@ void Server::closeSession(std::string user) {
     }
 }
 
+/**
+     * verify is the user has a session active on the server
+     * @param user
+     * @return whether he/she is logged in
+     */
 bool Server::hasSession(std::string user) {
     for(int i = 0; i < *currentUsers->getLength(); i++){
         std::string current = currentUsers->get(i)->getData();
@@ -91,7 +117,10 @@ bool Server::hasSession(std::string user) {
     return false;
 }
 
-
+/**
+     * Starts the server
+     * @return
+     */
 int Server::start() {
 
     Server::currentUsers = new GenericLinkedList<std::string>;
@@ -371,6 +400,12 @@ int Server::start() {
     }
 }
 
+
+/**
+ * Tells whether or not a user has register previously on the server
+ * @param user
+ * @return
+ */
 bool Server::isUser(std::string user) {
     for(int i = 0; i < *users->getLength(); i++){
         std::string current = users->get(i)->getData();

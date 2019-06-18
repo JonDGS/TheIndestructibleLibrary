@@ -29,9 +29,27 @@
 
 class Server{
 public:
+    /**
+     * Starts the server
+     * @return
+     */
     static int start();
+    /**
+     * verify is the user has a session active on the server
+     * @param user
+     * @return whether he/she is logged in
+     */
     static bool hasSession(std::string user);
+    /**
+     * Closes the sessions for an specific user
+     * @param user
+     */
     static void closeSession(std::string user);
+    /**
+     * Tells whether or not a user has register previously on the server
+     * @param user
+     * @return
+     */
     static bool isUser(std::string user);
 private:
     inline static GenericLinkedList<std::string>* currentUsers;

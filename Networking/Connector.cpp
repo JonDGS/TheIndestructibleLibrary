@@ -14,6 +14,11 @@ Connector::Connector()
 {
 }
 
+/**
+ * Methods that converts a String to a list based on commas
+ * @param data to be process
+ * @return LinkedList of the data separated
+ */
 GenericLinkedList<std::string>* convertStringToLL(std::string data){
     std::stringstream ss(data);
     GenericLinkedList<std::string>* list = new GenericLinkedList<std::string>;
@@ -27,6 +32,12 @@ GenericLinkedList<std::string>* convertStringToLL(std::string data){
     return list;
 }
 
+/**
+     * Function that checks whether or not the user is logged into the Server;
+     * @param username
+     * @param password (not implemented)
+     * @return whether or not the user is logged
+     */
 bool Connector::checkLogInCredentials(std::string user, std::string password){
     std::string answer = get(user, "registerAccount", password);
     if(answer == "ACCEPTED"){
@@ -34,6 +45,11 @@ bool Connector::checkLogInCredentials(std::string user, std::string password){
     }return false;
 }
 
+/**
+ * Converts Strings to an Integer so it can be used with switch cases
+ * @param string to be converted
+ * @return integer related to the string
+ */
 int convertCommandToInt(std::string data) {
     enum commands {
         requestImage = 0,
@@ -64,6 +80,14 @@ int convertCommandToInt(std::string data) {
     return -1;
 }
 
+/**
+ * Main method of the connector class, it uses the user and the request provided by the user to asked the specific
+ * server responsible for that specific request
+ * @param user
+ * @param request
+ * @param data
+ * @return response of the corresponding server
+ */
 std::string Connector::get(std::string user, std::string request, std::string data){
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     int requestStr = convertCommandToInt(request);

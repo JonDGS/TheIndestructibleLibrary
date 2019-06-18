@@ -36,6 +36,12 @@ public:
      * @return GenericLinkedList<std::string> The linked list requested.
      */
     static std::string get(std::string user, std::string request, std::string data);
+    /**
+     * Function that checks whether or not the user is logged into the Server;
+     * @param username
+     * @param password (not implemented)
+     * @return whether or not the user is logged
+     */
     static bool checkLogInCredentials(std::string user, std::string password);
 };
 

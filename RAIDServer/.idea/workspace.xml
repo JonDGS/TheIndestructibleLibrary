@@ -12,12 +12,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="935ff731-45df-468a-aefe-aea3fa3aa7d2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/actionswindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/actionswindow.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/selectionwindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/selectionwindow.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/sqlmanagementwindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/sqlmanagementwindow.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/sqlmanagementwindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientGUI/ClientGUI/ClientApplication/sqlmanagementwindow.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MetaDBServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MetaDBServer/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MetaDBServer/Networking/Server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../MetaDBServer/Networking/Server.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Networking/Connector.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Networking/Connector.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Networking/Connector.h" beforeDir="false" afterPath="$PROJECT_DIR$/../Networking/Connector.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Networking/Server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Networking/Server.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Networking/Server.h" beforeDir="false" afterPath="$PROJECT_DIR$/../Networking/Server.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -230,15 +229,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1560800681308</updated>
-      <workItem from="1560800684331" duration="14994000" />
+      <workItem from="1560800684331" duration="15770000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14994000" />
+    <option name="totallyTimeSpent" value="15770000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1920" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2497332" />
